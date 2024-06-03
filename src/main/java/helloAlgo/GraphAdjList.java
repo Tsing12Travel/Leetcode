@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import utils.Vertex;
+
 /* 基于邻接表实现的无向图类 */
 // Vertex 类表示顶点
 public class GraphAdjList {

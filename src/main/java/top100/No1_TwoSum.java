@@ -7,7 +7,7 @@ public class No1_TwoSum {
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             if (map.containsKey(target - nums[i])) {
-                return new int[]{target - nums[i], i};
+                return new int[]{map.get(target - nums[i]), i};
             }
             map.put(nums[i], i);
         }
@@ -17,6 +17,9 @@ public class No1_TwoSum {
 
     public static void main(String[] args) {
         int[] nums = new int[]{1, 5, 6, 3, 9, 0};
-        System.out.println(twoSum(nums, 5));
+        int[] x = twoSum(nums, 5);
+        for (int num : x) {
+            System.out.println(num);
+        }
     }
 }
