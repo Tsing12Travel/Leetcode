@@ -9,6 +9,7 @@ public class No1_TwoSum {
             if (map.containsKey(target - nums[i])) {
                 return new int[]{map.get(target - nums[i]), i};
             }
+            // 注：此处 map 的 key 是数组的值，value 是与该值(在数组中)对应的索引
             map.put(nums[i], i);
         }
 
