@@ -7,6 +7,7 @@ package top100;
 import java.util.HashSet;
 import java.util.Set;
 
+// 思路：每个数都判断一次这个数是不是连续序列的开头那个数：用哈希表查找这个数前面一个数是否存在，即 num-1 在序列中是否存在。存在那这个数肯定不是开头，直接跳过
 public class No128_LongestConsecutive {
     public static int longestConsecutive(int[] nums) {
         Set<Integer> num_set = new HashSet<>();
@@ -17,10 +18,12 @@ public class No128_LongestConsecutive {
         int longestStreak = 1;
 
         for (int num : num_set) {
+            // 检查 set 中是否存在比当前 num 小 1 的数
             if (!num_set.contains(num - 1)) {
                 int currentNum = num;
                 int currentStreak = 1;
 
+                // 以当前数为首的连续序列长度
                 while (num_set.contains(currentNum + 1)) {
                     currentNum += 1;
                     currentStreak += 1;
