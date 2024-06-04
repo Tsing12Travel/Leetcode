@@ -8,23 +8,28 @@ import java.util.*;
 
 public class No49_GroupAnagrams {
     public static List<List<String>> groupAnagrams(String[] strs) {
-        List<List<String>> res = new ArrayList<>();
         if (strs.length == 0) {
-            return res;
+            return null;
         }
 
-        Map<String, List<String>> map = new HashMap<>();
-        for (String str: strs) {
-            char[] chars = str.toCharArray();
-            Arrays.sort(chars);
-            String key = String.valueOf(chars);
-            List<String> list = map.getOrDefault(key, new ArrayList<>());
-            list.add(str);
-            map.put(key, list);
+        // 创建一个 HashMap 用于存储异位词分组的结果，键为排序后的字符串，值为对应分组的字符串列表
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (String str : strs) {
+            // 对当前字符串进行排序，作为 HashMap 的键
+            char[] array = str.toCharArray();
+            Arrays.sort(array);
+            String key = new String(array);
+
+            // 如果 HashMap 中不存在以 key 为键的列表，则创建一个新列表并放入 HashMap 中
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList<>());
+            }
+            // 将当前字符串添加到对应的列表中
+            map.get(key).add(str);
         }
 
-        res.addAll(map.values());
-        return res;
+        // 将 HashMap 的值（即所有异位词分组）转换为 List 并返回
+        return new ArrayList<>(map.values());
     }
 
     public static void main(String[] args) {
