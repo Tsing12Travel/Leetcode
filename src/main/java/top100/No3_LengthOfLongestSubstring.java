@@ -20,8 +20,8 @@ public class No3_LengthOfLongestSubstring {
         HashSet<Character> set = new HashSet<>();
         set.add(s.charAt(left));
 
-        while (left < right) {
-            while (left < right && !set.contains(s.charAt(right))) {
+        while (right < len) {
+            while (right < len && !set.contains(s.charAt(right))) {
                 set.add(s.charAt(right));
                 right++;
             }
@@ -34,7 +34,7 @@ public class No3_LengthOfLongestSubstring {
     }
 
     public static void main(String[] args) {
-        String str = "abcabcbb";
+        String str = "pwwkew";
         System.out.println(lengthOfLongestSubstring(str));
     }
 }
