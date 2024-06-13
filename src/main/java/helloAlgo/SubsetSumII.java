@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class subset_sum_ii {
+public class SubsetSumII {
     void backtrace(List<Integer> state, int target, int[] choices, int start, List<List<Integer>> res) {
         if (target == 0) {
             res.add(new ArrayList<>(state));
