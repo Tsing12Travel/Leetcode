@@ -5,7 +5,7 @@ import java.util.List;
 
 /* 输入一个整数数组，其中不包含重复元素，返回所有可能的排列。 */
 /* 回溯算法：全排列I */
-public class permutations_i {
+public class PermutationsI {
     public void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
         // 当状态长度等于元素数量时，记录解
         if (state.size() == choices.length) {
