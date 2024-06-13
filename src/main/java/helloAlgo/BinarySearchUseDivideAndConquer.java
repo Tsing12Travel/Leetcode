@@ -2,7 +2,7 @@ package helloAlgo;
 
 /* 给定一个长度为 n 的有序数组 nums ，其中所有元素都是唯一的，请查找元素 target */
 // 基于分治（递归）来实现
-public class binarySearchUseDivideAndConquer {
+public class BinarySearchUseDivideAndConquer {
     /* 二分查找：问题 f(i, j) */
     int dfs(int[] nums, int target, int i, int j) {
         // 若区间为空，代表无目标元素，则返回 -1
