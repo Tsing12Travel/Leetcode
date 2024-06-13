@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 /* 基于堆查找数组中最大的 k 个元素 */
-public class topKHeap {
+public class TopKHeap {
     static Queue<Integer> topKHeap(int[] nums, int k) {
         // 初始化小顶堆
         Queue<Integer> heap = new PriorityQueue<Integer>();
