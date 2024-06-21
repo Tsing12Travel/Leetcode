@@ -14,4 +14,22 @@ public class FindRepeatDocument {
 
         return -1;
     }
+
+    public int findRepeatDocument2(int[] documents) {
+        int i = 0;
+        while (i < documents.length) {
+            if (documents[i] == i) {
+                i++;
+                continue;
+            }
+
+            if (documents[documents[i]] == documents[i]) return documents[i];
+
+            int temp = documents[i];
+            documents[i] = documents[temp];
+            documents[temp] = temp;
+        }
+
+        return -1;
+    }
 }
