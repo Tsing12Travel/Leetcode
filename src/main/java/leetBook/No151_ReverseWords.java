@@ -4,6 +4,22 @@ import java.util.*;
 
 public class No151_ReverseWords {
     public static String reverseWords(String s) {
+        s = s.trim();  // 删除首尾空格
+        int left = s.length() - 1, right = left;
+        StringBuilder res = new StringBuilder();
+
+        while (left >= 0) {
+            while (left >= 0 && s.charAt(left) != ' ') left--;  // 查找首个空格
+            // res.append(s.substring(left + 1, right + 1) + " ");  // substring 的区间是左闭右开
+            res.append(s, left + 1, right + 1).append(" ");  // 添加单词，然后再添加一个空格
+            while (left >= 0 && s.charAt(left) == ' ') left--;  // 跳过单词间的空格
+            right = left;  // right 指向下个单词的尾字符
+        }
+
+        return res.toString().trim();  // 转化为字符串并返回(前面每次添加单词后都添加了空格，此处需要删除最后一个空格)
+    }
+
+    public static String reverseWords1(String s) {
         // 除去开头和末尾的空白字符
         s = s.trim();
         // 正则匹配连续的空白字符作为分隔符分割
@@ -110,6 +126,6 @@ public class No151_ReverseWords {
 
     public static void main(String[] args) {
         String str = "test a is This World! Hello";
-        System.out.println(reverseWords3(str));
+        System.out.println(reverseWords(str));
     }
 }
