@@ -9,11 +9,12 @@ public class No56_Merge {
     public int[][] merge(int[][] intervals) {
         if (intervals.length == 0) return intervals;
 
-        Arrays.sort(intervals, new Comparator<int[]>() {
-            public int compare(int[] o1, int[] o2) {
-                return o1[0] - o2[0];
-            }
-        });
+//        Arrays.sort(intervals, new Comparator<int[]>() {
+//            public int compare(int[] o1, int[] o2) {
+//                return o1[0] - o2[0];
+//            }
+//        });
+        Arrays.sort(intervals, (o1, o2) -> o1[0] - o2[0]);
 
         List<int[]> merged = new ArrayList<>();
         for (int i = 0; i < intervals.length; i++) {
