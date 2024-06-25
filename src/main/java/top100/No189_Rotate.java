@@ -13,4 +13,21 @@ public class No189_Rotate {
 
         System.arraycopy(newNums, 0, nums, 0, len);
     }
+
+    public void rotate2(int[] nums, int k) {
+        k = k % nums.length;  // 重要！无论 k 是否大于数组长度，实际移动的长度只有 k%nums.length
+        reverse(nums, 0, nums.length - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, nums.length - 1);
+    }
+
+    public void reverse(int[] nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
 }
