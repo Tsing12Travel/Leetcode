@@ -32,4 +32,10 @@ public class FindRepeatDocument {
 
         return -1;
     }
+
+    public static void main(String[] args) {
+        FindRepeatDocument f = new FindRepeatDocument();
+        int[] documents = new int[]{3, 4, 2, 1, 1, 0};
+        System.out.println(f.findRepeatDocument2(documents));
+    }
 }
