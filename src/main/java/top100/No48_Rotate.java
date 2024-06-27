@@ -52,15 +52,14 @@ public class No48_Rotate {
     }
 
     public void rotate2(int[][] matrix) {
-        int row_len = matrix.length;
-        int col_len = matrix[0].length;
-
-        for (int i = 0; i < row_len / 2; i++) {
-            for (int j = 0; j < (col_len + 1) / 2; j++) {
+        int n = matrix.length;
+        for (int i = 0; i < n / 2; ++i) {
+            for (int j = 0; j < (n + 1) / 2; ++j) {
                 int temp = matrix[i][j];
-                matrix[i][j] = matrix[i][row_len - 1 - j];
-                matrix[i][row_len - 1 - j] = matrix[row_len - 1 - i][col_len - 1 - j];
-                matrix[col_len - 1 - j][j] = temp;
+                matrix[i][j] = matrix[n - j - 1][i];
+                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
+                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
+                matrix[j][n - i - 1] = temp;
             }
         }
     }
@@ -68,7 +67,7 @@ public class No48_Rotate {
     public static void main(String[] args) {
         No48_Rotate test = new No48_Rotate();
         int[][] matrix = {{5, 1, 9, 11}, {2, 4, 8, 10}, {13, 3, 6, 7}, {15, 14, 12, 16}};
-        test.rotate1(matrix);
+        test.rotate2(matrix);
         System.out.println(Arrays.deepToString(matrix));
     }
 }
