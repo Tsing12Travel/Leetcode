@@ -1,7 +1,33 @@
 package top100;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 public class No23_MergeKLists {
     public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) return null;
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((o1, o2) -> {return o1.val - o2.val;});
+
+        for (ListNode list : lists) {
+            if (list != null) pq.offer(list);
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+
+        while (!pq.isEmpty()) {
+            ListNode node = pq.poll();
+            curr.next = node;
+            curr = curr.next;
+            node = node.next;
+            if (node != null) pq.offer(node);
+        }
+
+        return dummy.next;
+    }
+
+
+    public ListNode mergeKLists2(ListNode[] lists) {
         if (lists == null || lists.length == 0) return null;
 
         ListNode ans = null;
@@ -31,5 +57,18 @@ public class No23_MergeKLists {
 
         curr.next = l1 == null ? l2 : l1;
         return dummy.next;
+    }
+
+
+    public ListNode mergeKLists3(ListNode[] lists) {
+        return merge(lists, 0, lists.length - 1);
+    }
+
+    private ListNode merge(ListNode[] lists, int left, int right) {
+        if (left == right) return lists[left];
+        if (left > right) return null;
+
+        int mid = (right + left) >> 1;
+        return mergeTwoLists(merge(lists, left, mid), merge(lists, mid + 1, right));
     }
 }
