@@ -4,7 +4,7 @@ public class No25_ReverseKGroup {
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode dummy = new ListNode(0, head);
         ListNode prev = dummy;
-        ListNode curr = dummy;
+        ListNode curr = head;
         int len = 0;
 
         while (curr != null) {
