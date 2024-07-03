@@ -21,6 +21,7 @@ public class No98_IsValidBST {
         return isValidBST(node.left, left, node_val) && isValidBST(node.right, node_val, right);
     }
 
+
     private long pre = Long.MIN_VALUE;
     public boolean isValidBST2(TreeNode root) {
         if (root == null) return true;
