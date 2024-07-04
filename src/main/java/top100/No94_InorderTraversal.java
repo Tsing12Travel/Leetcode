@@ -20,6 +20,7 @@ public class No94_InorderTraversal {
         dfs(root.right, res);
     }
 
+
     public List<Integer> inorderTraversal2(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         Deque<TreeNode> stack = new LinkedList<>();
@@ -37,6 +38,7 @@ public class No94_InorderTraversal {
 
         return res;
     }
+
 
     public List<Integer> inorderTraversal3(TreeNode root) {
         List<Integer> ans = new LinkedList<>();
@@ -66,6 +68,7 @@ public class No94_InorderTraversal {
         }
         return ans;
     }
+
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);
