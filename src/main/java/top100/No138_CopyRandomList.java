@@ -3,19 +3,6 @@ package top100;
 import java.util.HashMap;
 import java.util.Map;
 
-// Definition for a Node
-class Node {
-    int val;
-    Node next;
-    Node random;
-
-    public Node(int val) {
-        this.val = val;
-        this.next = null;
-        this.random = null;
-    }
-}
-
 public class No138_CopyRandomList {
     public Node copyRandomList(Node head) {
         if (head == null) return null;
