@@ -79,4 +79,45 @@ public class No114_Flatten {
             }
         }
     }
+
+
+    private TreeNode prev = null;
+
+    public void flatten4(TreeNode root) {
+        if (root == null) return;
+
+        flatten4(root.left);
+        flatten4(root.right);
+        root.left = null;
+        root.right = prev;
+        prev = root;
+    }
+
+
+    public void flatten5(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        s.push(root);
+        TreeNode pre = null;
+        while (!s.isEmpty()) {
+            TreeNode temp = s.pop();
+            if (pre != null) {
+                pre.right = temp;
+                pre.left = null;
+            }
+
+            if (temp.right != null) {
+                s.push(temp.right);
+            }
+
+            if (temp.left != null) {
+                s.push(temp.left);
+            }
+
+            pre = temp;
+        }
+    }
 }
