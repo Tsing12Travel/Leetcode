@@ -25,9 +25,23 @@ public class No11_MaxArea {
         return ans;
     }
 
+
+    public static int maxArea2(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int res = 0;
+
+        while (left < right) {
+            res = height[left] < height[right] ? Math.max(res, (right - left) * height[left++]) : Math.max(res, (right - left) * height[right--]);
+        }
+
+        return res;
+    }
+
+
     public static void main(String[] args) {
         int[] height = new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7};
         // int[] height = new int[]{1, 1};
-        System.out.println(maxArea(height));
+        System.out.println(maxArea2(height));
     }
 }
