@@ -2,6 +2,7 @@ package top100;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /* 3.无重复字符的最长字串 */
 // 给定一个字符串 s ，请你找出其中不含有重复字符的最长子串的长度。
@@ -44,13 +45,14 @@ public class No3_LengthOfLongestSubstring {
         int len = s.length();
         if (len == 0) return 0;
 
-        int left = 0;
+        int left = -1;
         int res = 0;
         HashMap<Character, Integer> map = new HashMap<>();
 
         for (int right = 0; right < len; right++) {
             if (map.containsKey(s.charAt(right))) {
                 left = Math.max(left, map.get(s.charAt(right)));  // 更新左边界
+                // left = map.get(s.charAt(right));  // 此为错误写法，如字符串 abba，遍历到第二个 a 时，左指针又跳回到最左边 a 去了，导致错误的左边界
             }
 
             map.put(s.charAt(right), right);  // 哈希表记录
@@ -61,8 +63,22 @@ public class No3_LengthOfLongestSubstring {
     }
 
 
+    // 动态规划 + 哈希表
+    public int lengthOfLongestSubstring3(String s) {
+        Map<Character, Integer> dic = new HashMap<>();
+        int res = 0, tmp = 0, len = s.length();
+        for(int j = 0; j < len; j++) {
+            int i = dic.getOrDefault(s.charAt(j), -1); // 获取索引 i
+            dic.put(s.charAt(j), j); // 更新哈希表
+            tmp = tmp < j - i ? tmp + 1 : j - i; // dp[j - 1] -> dp[j]
+            res = Math.max(res, tmp); // max(dp[j - 1], dp[j])
+        }
+        return res;
+    }
+
+
     public static void main(String[] args) {
-        String str = "pwwkew";
+        String str = "abba";
         System.out.println(lengthOfLongestSubstring2(str));
     }
 }
