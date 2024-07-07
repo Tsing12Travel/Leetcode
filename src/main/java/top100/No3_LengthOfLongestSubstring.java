@@ -45,11 +45,11 @@ public class No3_LengthOfLongestSubstring {
 
         for (int right = 0; right < len; right++) {
             if (map.containsKey(s.charAt(right))) {
-                left = Math.max(left, map.get(s.charAt(right)));
+                left = Math.max(left, map.get(s.charAt(right)));  // 更新左边界
             }
 
-            map.put(s.charAt(right), right);
-            res = Math.max(res, right - left);
+            map.put(s.charAt(right), right);  // 哈希表记录
+            res = Math.max(res, right - left);  // 更新结果
         }
 
         return res;
