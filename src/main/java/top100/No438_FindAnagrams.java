@@ -55,11 +55,83 @@ public class No438_FindAnagrams {
     }
 
 
+    /*解题思路
+    使用滑动窗口：
+    使用两个哈希表来比较窗口内的字符频率：need 表示字符串 p 中字符的需求量，window 表示当前窗口内的字符统计。
+    通过滑动窗口的方法，在字符串 s 上移动一个大小为 p.length() 的窗口，在每个窗口内比较字符频率是否一致。
+
+    步骤：
+    初始化：将字符串 p 的字符频率存入 need 哈希表。
+    滑动窗口：从左到右遍历字符串 s，在每个位置维护一个大小为 p.length() 的窗口。
+    每次移动右边界 right，将新进入窗口的字符加入 window 中，并更新 valid 计数（表示满足需求的字符数量）。
+    如果 window 中某个字符的数量与 need 中相应字符的数量一致，则增加 valid。
+    当窗口大小达到 p.length() 时，检查 valid 是否等于 need.size()（即所有字符的频率是否一致）。若一致，则当前窗口起始位置是一个符合条件的子串起始位置。
+    收缩窗口：
+    当窗口大小大于 p.length() 时，移动左边界 left，从窗口中移出最左边的字符，并更新 window 和 valid。
+    继续向右移动 right 直到遍历完整个字符串 s。
+    返回结果：
+    收集所有符合条件的起始索引并返回。*/
+
+
+    public List<Integer> findAnagrams2(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        if (s == null || s.isEmpty() || p == null || p.isEmpty()) {
+            return res;
+        }
+
+        Map<Character, Integer> need = new HashMap<>();
+        Map<Character, Integer> window = new HashMap<>();
+
+        // 初始化need哈希表
+        for (char c : p.toCharArray()) {
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+
+        int left = 0, right = 0;
+        int valid = 0; // 记录窗口中满足 need 条件的字符个数
+
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            right++;
+
+            // 更新窗口内字符计数
+            if (need.containsKey(c)) {
+                window.put(c, window.getOrDefault(c, 0) + 1);
+                if (window.get(c).equals(need.get(c))) {
+                    valid++;
+                }
+            }
+
+            // 当窗口大小等于 p.length() 时，判断是否符合条件
+            // 注意判断条件 p.length() 不能写成 need.size()，因为 need.size() 只是表示 p 中不同字符的数量，而不是 p 的总长度
+            // 当 s = 'baa' p='aa' 时，need.size() 无法通过
+            while (right - left >= p.length()) {
+                if (valid == need.size()) {
+                    res.add(left);
+                }
+
+                char d = s.charAt(left);
+                left++;
+
+                // 更新窗口内字符计数
+                if (need.containsKey(d)) {
+                    if (window.get(d).equals(need.get(d))) {
+                        valid--;
+                    }
+                    window.put(d, window.get(d) - 1);
+                }
+            }
+        }
+
+        return res;
+    }
+
+
     public static void main(String[] args) {
         String s = "cbaebabacd";
         String p = "abc";
         No438_FindAnagrams n = new No438_FindAnagrams();
-        List<Integer> ans = n.findAnagrams(s, p);
+        List<Integer> ans = n.findAnagrams2(s, p);
         System.out.println(ans);
     }
 }
