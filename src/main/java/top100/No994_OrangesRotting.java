@@ -1,6 +1,8 @@
 package top100;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 // 题目要求：返回直到单元格中没有新鲜橘子为止所必须经过的最小分钟数 -> 求腐烂橘子到所有新鲜橘子的最短路径 -> BFS
@@ -66,5 +68,44 @@ public class No994_OrangesRotting {
         } else {
             return round;
         }
+    }
+
+
+    private static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // 四方向
+
+    public int orangesRotting2(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int fresh = 0;
+        List<int[]> q = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    fresh++; // 统计新鲜橘子个数
+                } else if (grid[i][j] == 2) {
+                    q.add(new int[]{i, j}); // 一开始就腐烂的橘子
+                }
+            }
+        }
+
+        int ans = -1;
+        while (!q.isEmpty()) {
+            ans++; // 经过一分钟
+            List<int[]> tmp = q;
+            q = new ArrayList<>();
+            for (int[] pos : tmp) { // 已经腐烂的橘子
+                for (int[] d : DIRECTIONS) { // 四方向
+                    int i = pos[0] + d[0];
+                    int j = pos[1] + d[1];
+                    if (0 <= i && i < m && 0 <= j && j < n && grid[i][j] == 1) { // 新鲜橘子
+                        fresh--;
+                        grid[i][j] = 2; // 变成腐烂橘子
+                        q.add(new int[]{i, j});
+                    }
+                }
+            }
+        }
+
+        return fresh > 0 ? -1 : Math.max(ans, 0);
     }
 }
