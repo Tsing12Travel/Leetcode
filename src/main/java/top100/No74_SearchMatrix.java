@@ -25,6 +25,26 @@ public class No74_SearchMatrix {
     }
 
 
+    // 排除法。从右上角开始搜索
+    public boolean searchMatrix2(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+        int row = 0;
+        int col = matrix[0].length - 1;
+
+        while (row < matrix.length && col >= 0) {
+            if (matrix[row][col] == target) {
+                return true;
+            } else if (matrix[row][col] < target) {
+                row++;
+            } else {
+                col--;
+            }
+        }
+
+        return false;
+    }
+
+
     // 暴力解法
     public boolean searchMatrix3(int[][] matrix, int target) {
         for (int i = 0; i < matrix.length; i++) {
