@@ -1,9 +1,6 @@
 package top100;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class No207_CanFinish {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
@@ -50,11 +47,64 @@ public class No207_CanFinish {
     }
 
 
+    public boolean canFinish2(int numCourses, int[][] prerequisites) {
+        //邻接，存放前置课程和可学课程数组
+        HashMap<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+        //索引对应课程，统计每个课程前置课程数量
+        int[] preClssCount = new int[numCourses];
+        for (int[] prerequisite : prerequisites) {
+            //获取对应的可学课程集合
+            List<Integer> list = map.getOrDefault(prerequisite[1], new ArrayList<Integer>());
+            list.add(prerequisite[0]);
+            map.put(prerequisite[1], list);
+            //统计数量
+            preClssCount[prerequisite[0]]++;
+        }
+        //存放可以直接学习的可成，第一次放置直接可学的课程，后续防止通过这些课程后可学的可成
+        Deque<Integer> queue = new LinkedList<>();
+        //放置初始化课程
+        for (int i = 0; i < numCourses; i++) {
+            if (preClssCount[i] == 0) {
+                queue.add(i);
+            }
+        }
+        //开始搜寻课程
+        while (!queue.isEmpty()) {
+            //广度优先遍历
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int preClazz = queue.poll();
+                //学完后可以学的课程
+                List<Integer> list = map.get(preClazz);
+                //遍历这些可以学习的可成
+                if (list == null) {
+                    continue;
+                }
+                for (int clazz : list) {
+                    //将这些课程的前置课程数量-1
+                    preClssCount[clazz]--;
+                    //当前置课程为0的时候说明可以直接学习，也就是入队列queue
+                    if (preClssCount[clazz] == 0) {
+                        queue.add(clazz);
+                    }
+                }
+            }
+        }
+        //但凡有课程的前置不为0则说明无法完成
+        for (int count : preClssCount) {
+            if (count > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
     public static void main(String[] args) {
         int[][] prerequisites = new int[][]{{1, 0}};
 //        int[][] prerequisites = new int[][]{{1, 0}, {0, 1}};
         int numCourses = 2;
         No207_CanFinish no207_CanFinish = new No207_CanFinish();
-        System.out.println(no207_CanFinish.canFinish(numCourses, prerequisites));
+        System.out.println(no207_CanFinish.canFinish2(numCourses, prerequisites));
     }
 }
