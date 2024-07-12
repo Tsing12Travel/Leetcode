@@ -4,6 +4,81 @@ import java.util.*;
 
 public class No207_CanFinish {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
+        // 邻接，存放前置课程和可学课程数组
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        // 索引对应课程，统计每个课程前置课程数量(即索引处课程需要学习前置课程的数量)
+        // 如 [1, 0] (学习课程 1 之前要学习课程 0)于是有 preClassCount[1] = 1
+        int[] preClassCount = new int[numCourses];
+
+        /*// 此处构建邻接表有点绕，可以像 canFinish2 处一样先初始化邻接表
+        for (int[] prerequisite : prerequisites) {
+            //获取对应的可学课程集合
+            List<Integer> list = map.getOrDefault(prerequisite[1], new ArrayList<>());
+            list.add(prerequisite[0]);
+            map.put(prerequisite[1], list);
+            //统计数量
+            preClassCount[prerequisite[0]]++;
+        }*/
+        // 初始化邻接表
+        for (int i = 0; i < numCourses; i++) {
+            map.put(i, new ArrayList<>());
+        }
+        // 构建邻接表和前置课程数组
+        for (int[] prerequisite : prerequisites) {
+            map.get(prerequisite[1]).add(prerequisite[0]);
+            preClassCount[prerequisite[0]]++;
+        }
+
+        //存放可以直接学习的课程，第一次放置直接可学的课程，后续防止通过这些课程后可学的可成
+        Deque<Integer> queue = new LinkedList<>();
+        //放置初始化课程
+        for (int i = 0; i < numCourses; i++) {
+            if (preClassCount[i] == 0) {
+                queue.add(i);
+            }
+        }
+
+        int learnedClass = numCourses;  // 这个变量可以没有，直接使用 numCourses
+        //开始搜寻课程
+        while (!queue.isEmpty()) {
+            //广度优先遍历
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                // 将要学习的前置课程
+                int preClazz = queue.poll();
+                // 学完了一门前置课程
+                learnedClass--;
+                // 学完后可以学的课程
+                List<Integer> list = map.get(preClazz);
+                // 遍历这些可以学习的可成
+                if (list == null) {
+                    continue;
+                }
+                for (int clazz : list) {
+                    // 将这些课程的前置课程数量 -1
+                    preClassCount[clazz]--;
+                    // 当前置课程为0的时候说明可以直接学习，也就是入队列 queue
+                    if (preClassCount[clazz] == 0) {
+                        queue.add(clazz);
+                    }
+                }
+            }
+        }
+
+        // 如果学完了所有课程说明无环，否则课程间相互依赖(成环)
+        return learnedClass == 0;
+
+        /*// 但凡有课程的前置不为 0 则说明无法完成
+        for (int count : preClassCount) {
+            if (count > 0) {
+                return false;
+            }
+        }
+        return true;*/
+    }
+
+
+    public boolean canFinish2(int numCourses, int[][] prerequisites) {
         int[] indegrees = new int[numCourses];  // 创建一个数组，用于存放每门课程的入度（即先修课程的数量）
         List<List<Integer>> adjacency = new ArrayList<>();  // 创建一个邻接表，用于存放每门课程的后续课程
         Queue<Integer> queue = new LinkedList<>();  // 创建一个队列，用于存放入度为 0 的课程（即没有先修课程，可以直接学习的课程）
@@ -47,64 +122,11 @@ public class No207_CanFinish {
     }
 
 
-    public boolean canFinish2(int numCourses, int[][] prerequisites) {
-        //邻接，存放前置课程和可学课程数组
-        HashMap<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
-        //索引对应课程，统计每个课程前置课程数量
-        int[] preClssCount = new int[numCourses];
-        for (int[] prerequisite : prerequisites) {
-            //获取对应的可学课程集合
-            List<Integer> list = map.getOrDefault(prerequisite[1], new ArrayList<Integer>());
-            list.add(prerequisite[0]);
-            map.put(prerequisite[1], list);
-            //统计数量
-            preClssCount[prerequisite[0]]++;
-        }
-        //存放可以直接学习的可成，第一次放置直接可学的课程，后续防止通过这些课程后可学的可成
-        Deque<Integer> queue = new LinkedList<>();
-        //放置初始化课程
-        for (int i = 0; i < numCourses; i++) {
-            if (preClssCount[i] == 0) {
-                queue.add(i);
-            }
-        }
-        //开始搜寻课程
-        while (!queue.isEmpty()) {
-            //广度优先遍历
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                int preClazz = queue.poll();
-                //学完后可以学的课程
-                List<Integer> list = map.get(preClazz);
-                //遍历这些可以学习的可成
-                if (list == null) {
-                    continue;
-                }
-                for (int clazz : list) {
-                    //将这些课程的前置课程数量-1
-                    preClssCount[clazz]--;
-                    //当前置课程为0的时候说明可以直接学习，也就是入队列queue
-                    if (preClssCount[clazz] == 0) {
-                        queue.add(clazz);
-                    }
-                }
-            }
-        }
-        //但凡有课程的前置不为0则说明无法完成
-        for (int count : preClssCount) {
-            if (count > 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
     public static void main(String[] args) {
         int[][] prerequisites = new int[][]{{1, 0}};
 //        int[][] prerequisites = new int[][]{{1, 0}, {0, 1}};
         int numCourses = 2;
         No207_CanFinish no207_CanFinish = new No207_CanFinish();
-        System.out.println(no207_CanFinish.canFinish2(numCourses, prerequisites));
+        System.out.println(no207_CanFinish.canFinish(numCourses, prerequisites));
     }
 }
