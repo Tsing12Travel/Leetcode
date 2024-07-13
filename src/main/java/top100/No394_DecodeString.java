@@ -35,4 +35,13 @@ public class No394_DecodeString {
         }
         return res.toString();
     }
+
+
+    public static void main(String[] args) {
+        No394_DecodeString test = new No394_DecodeString();
+//        String s = "3[a]2[bc]";
+//        String s = "3[a2[c]]";
+        String s = "2[abc]3[cd]ef";
+        System.out.println(test.decodeString(s));
+    }
 }
