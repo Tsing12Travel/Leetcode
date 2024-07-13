@@ -117,3 +117,43 @@ class MinStack3 {
         return min_stack.peek();
     }
 }
+
+
+// 使用 Stack<Node>
+class MinStack4 {
+    private final Stack<Node> stack;
+
+    public MinStack4() {
+        stack = new Stack<>();
+    }
+
+    public void push(int val) {
+        if (stack.isEmpty()) {
+            stack.push(new Node(val, val));
+        } else {
+            stack.push(new Node(val, Math.min(val, stack.peek().min)));
+        }
+    }
+
+    public void pop() {
+        stack.pop();
+    }
+
+    public int top() {
+        return stack.peek().val;
+    }
+
+    public int getMin() {
+        return stack.peek().min;
+    }
+
+    public static class Node {
+        int val;
+        int min;
+
+        public Node(int val, int min) {
+            this.val = val;
+            this.min = min;
+        }
+    }
+}
