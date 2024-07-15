@@ -46,10 +46,26 @@ public class No215_FindKthLargest {
     }
 
 
+    public int findKthLargest2(int[] nums, int k) {
+        int[] buckets = new int[20001];
+        for (int i = 0; i < nums.length; i++) {
+            buckets[nums[i] + 10000]++;
+        }
+
+        for (int i = 20000; i >= 0; i--) {
+            k = k - buckets[i];
+            if (k <= 0) {
+                return i - 10000;
+            }
+        }
+        return 0;
+    }
+
+
     public static void main(String[] args) {
         int[] nums = new int[]{3, 2, 1, 5, 6, 4};
         int k = 2;
         No215_FindKthLargest no215 = new No215_FindKthLargest();
-        System.out.println(no215.findKthLargest(nums, k));
+        System.out.println(no215.findKthLargest2(nums, k));
     }
 }
