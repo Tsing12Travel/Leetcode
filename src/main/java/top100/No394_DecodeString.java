@@ -24,7 +24,7 @@ public class No394_DecodeString {
                 for (int i = 0; i < curr_multi; i++) {
                     curr_res.append(res);
                 }
-                // 与括号外合并
+                // 与括号外合并。注意这里的 pop() 弹出的是 stack_res 内的一整个数据(这个整体构成了 StringBuilder 的内容主体)
                 res = stack_res.pop().append(curr_res);
             } else if (c >= '0' && c <= '9') {
                 // 如果 multi 是多位，则需要 ×10
