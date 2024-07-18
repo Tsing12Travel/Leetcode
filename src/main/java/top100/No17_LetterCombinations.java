@@ -42,7 +42,7 @@ public class No17_LetterCombinations {
 
     private void backtrack(String digits, int depth, StringBuilder path, List<String> res) {
         if (depth == digits.length()) {
-            res.add(path.toString());
+            res.add(path.toString());  // 注意此处 path 无需新建，即加入的时候不需要 new 新的列表。有些题目需要新建 path，否则最后会被回溯到空列表
             return;
         }
 
@@ -53,7 +53,7 @@ public class No17_LetterCombinations {
             backtrack(digits, i + 1, path, res);
             path.deleteCharAt(path.length() - 1);
         }
-        /*// 也可写成如下循环
+        /* 也可写成如下循环
         for (char c : MAPPING[digits.charAt(depth) - '0'].toCharArray()) {
             path.append(c);
             backtrack(digits, depth + 1, path, res);
