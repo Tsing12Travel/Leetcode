@@ -33,6 +33,7 @@ public class No131_Partition {
         }
 
         // 不选 i 和 i + 1 之间的逗号（i = n - 1 时一定要选）
+        // 这里的【选】指的是把 i 当作子串的右端点。因为 n - 1 一定是子串的右端点，所以一定要选。
         if (i < s.length() - 1) {
             dfs(i + 1, start);
         }
