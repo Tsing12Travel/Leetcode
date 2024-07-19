@@ -99,6 +99,47 @@ public class No39_CombinationSum {
     }
 
 
+    // 完全背包预处理 + 可行性剪枝
+    public List<List<Integer>> combinationSum4(int[] candidates, int target) {
+        int n = candidates.length;
+        // 完全背包
+        boolean[][] f = new boolean[n + 1][target + 1];
+        f[0][0] = true;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j <= target; j++) {
+                f[i + 1][j] = f[i][j] || j >= candidates[i] && f[i + 1][j - candidates[i]];
+            }
+        }
+
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        // 倒着递归，这样参数符合 f 数组的定义
+        dfs(n - 1, target, candidates, f, ans, path);
+        return ans;
+    }
+
+    private void dfs(int i, int left, int[] candidates, boolean[][] f, List<List<Integer>> ans, List<Integer> path) {
+        if (left == 0) {
+            // 找到一个合法组合
+            ans.add(new ArrayList<>(path));
+            return;
+        }
+
+        // 无法用下标在 [0, i] 中的数字组合出 left
+        if (left < 0 || !f[i + 1][left]) {
+            return;
+        }
+
+        // 不选
+        dfs(i - 1, left, candidates, f, ans, path);
+
+        // 选
+        path.add(candidates[i]);
+        dfs(i, left - candidates[i], candidates, f, ans, path);
+        path.remove(path.size() - 1);
+    }
+
+
     public static void main(String[] args) {
         int[] candidates = {2, 3, 6, 7};
         int target = 7;
