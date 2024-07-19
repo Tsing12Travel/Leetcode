@@ -34,8 +34,38 @@ public class No22_GenerateParenthesis {
     }
 
 
+    // 枚举填左括号还是右括号
+    private int n;
+    private char[] path;
+    private final List<String> ans = new ArrayList<>();
+
+    public List<String> generateParenthesis2(int n) {
+        this.n = n;
+        path = new char[n * 2];
+        dfs2(0, 0);
+        return ans;
+    }
+
+    private void dfs2(int i, int open) {
+        if (i == n * 2) {
+            ans.add(new String(path));
+            return;
+        }
+
+        if (open < n) {  // 可以填左括号
+            path[i] = '(';
+            dfs2(i + 1, open + 1);
+        }
+
+        if (i - open < open) {  // 可以填右括号
+            path[i] = ')';
+            dfs2(i + 1, open);
+        }
+    }
+
+
     public static void main(String[] args) {
         No22_GenerateParenthesis sol = new No22_GenerateParenthesis();
-        System.out.println(sol.generateParenthesis(3));
+        System.out.println(sol.generateParenthesis2(3));
     }
 }
