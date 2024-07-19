@@ -1,6 +1,7 @@
 package top100;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class No22_GenerateParenthesis {
@@ -64,8 +65,39 @@ public class No22_GenerateParenthesis {
     }
 
 
+    // 枚举下一个左括号的位置
+    private int n3;
+    private final List<Integer> path3 = new ArrayList<>();
+    private final List<String> ans3 = new ArrayList<>();
+
+    public List<String> generateParenthesis3(int n3) {
+        this.n3 = n3;
+        dfs3(0, 0);
+        return ans3;
+    }
+
+    // balance = 左括号个数 - 右括号个数
+    private void dfs3(int i, int balance) {
+        if (path3.size() == n3) {
+            // 注意：path3 里面存的是左括号所在的下标，但最终输出是组合情况，故二者需要转换
+            char[] newPath = new char[n3 * 2];
+            Arrays.fill(newPath, ')');
+            for (int j : path3) newPath[j] = '(';
+            ans3.add(new String(newPath));
+            return;
+        }
+
+        // 可以填 0 到 balance 个右括号
+        for (int close = 0; close <= balance; close++) {  // 填 close 个右括号
+            path3.add(i + close);  // 填 1 个左括号
+            dfs3(i + close + 1, balance - close + 1);
+            path3.removeLast();
+        }
+    }
+
+
     public static void main(String[] args) {
         No22_GenerateParenthesis sol = new No22_GenerateParenthesis();
-        System.out.println(sol.generateParenthesis2(3));
+        System.out.println(sol.generateParenthesis3(3));
     }
 }
