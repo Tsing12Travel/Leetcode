@@ -5,7 +5,39 @@ import java.util.Arrays;
 import java.util.List;
 
 public class No39_CombinationSum {
+    /*「答案视角」。用 dfs(i, left) 来回溯，设当前枚举到 candidates[i]，剩余要选的元素之和为 left，考虑枚举下个元素是谁：
+    在 [i, n − 1] 中枚举要填在 path 中的元素 candidates[j]，然后递归到 dfs(j, left − candidates[j])。
+    注意这里是递归到 j 不是 j + 1，表示 candidates[j] 可以重复选取 */
+    // 枚举选哪个
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        int len = candidates.length;
+        if (len == 0) return res;
+
+        Arrays.sort(candidates);
+        List<Integer> path = new ArrayList<>();
+        dfs(candidates, 0, target, path, res);
+        return res;
+    }
+
+    private void dfs(int[] candidates, int depth, int left, List<Integer> path, List<List<Integer>> res) {
+        if (left == 0) {  // 找到一个合法组合
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        // 剪枝，剩下的数都比 left 大，直接返回
+        if (left < candidates[depth]) return;
+
+        for (int i = depth; i < candidates.length; i++) {
+            path.add(candidates[i]);
+            dfs(candidates, i, left - candidates[i], path, res);
+            path.removeLast();
+        }
+    }
+
+
+    // 选或不选
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
         int len = candidates.length;
         if (len == 0) return res;
@@ -31,6 +63,39 @@ public class No39_CombinationSum {
         path.add(candidates[curr]);
         backtrack(candidates, curr, target - candidates[curr], path, res);
         path.removeLast();
+    }
+
+
+    public List<List<Integer>> combinationSum3(int[] candidates, int target) {
+        List<Integer> state = new ArrayList<>(); // 状态（子集）
+        Arrays.sort(candidates); // 对 candidates 进行排序
+        int start = 0; // 遍历起始点
+        List<List<Integer>> res = new ArrayList<>(); // 结果列表（子集列表）
+        backtrack2(state, target, candidates, start, res);
+        return res;
+    }
+
+    public void backtrack2(List<Integer> state, int target, int[] choices, int start, List<List<Integer>> res) {
+        // 子集和等于 target 时，记录解
+        if (target == 0) {
+            res.add(new ArrayList<>(state));
+            return;
+        }
+        // 遍历所有选择
+        // 剪枝二：从 start 开始遍历，避免生成重复子集
+        for (int i = start; i < choices.length; i++) {
+            // 剪枝一：若子集和超过 target ，则直接结束循环
+            // 这是因为数组已排序，后边元素更大，子集和一定超过 target
+            if (target - choices[i] < 0) {
+                break;
+            }
+            // 尝试：做出选择，更新 target, start
+            state.add(choices[i]);
+            // 进行下一轮选择
+            backtrack2(state, target - choices[i], choices, i, res);
+            // 回退：撤销选择，恢复到之前的状态
+            state.removeLast();
+        }
     }
 
 
