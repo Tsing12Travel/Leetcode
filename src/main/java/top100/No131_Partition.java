@@ -46,10 +46,33 @@ public class No131_Partition {
     }
 
 
+    // 答案的视角（枚举子串结束位置）
+    public List<List<String>> partition2(String s) {
+        this.s = s;
+        backtrack(0);
+        return res;
+    }
+
+    private void backtrack(int curr) {
+        if (curr == s.length()) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int i = curr; i < s.length(); i++) {  // 枚举子串的结束位置
+            if (isPalindrome(curr, i)) {
+                path.add(s.substring(curr, i + 1));
+                backtrack(curr + 1);
+                path.removeLast();
+            }
+        }
+    }
+
+
     public static void main(String[] args) {
         String str = "aab";
         // String str = "a";
         No131_Partition sol = new No131_Partition();
-        System.out.println(sol.partition(str));
+        System.out.println(sol.partition2(str));
     }
 }
