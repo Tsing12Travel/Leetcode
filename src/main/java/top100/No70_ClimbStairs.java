@@ -13,6 +13,9 @@ public class No70_ClimbStairs {
 
 
     // 递归 + 记录返回值 = 记忆化搜索
+    /* 注意：memo 数组的初始值一定不能等于要记忆化的值！
+    例如初始值设置为 0，并且要记忆化的 dfs(i) 也等于 0，那就没法判断 0 到底表示第一次遇到这个状态，还是表示之前遇到过了，从而导致记忆化失效。
+    一般把初始值设置为 −1。本题由于方案数均为正数，所以可以初始化成 0 */
     public int climbStairs2(int n) {
         int[] dp = new int[n + 1];
         return dfs2(n, dp);
@@ -28,7 +31,7 @@ public class No70_ClimbStairs {
 
 
     public static void main(String[] args) {
-        int n = 46;
+        int n = 45;
         No70_ClimbStairs solution = new No70_ClimbStairs();
         System.out.println(solution.climbStairs2(n));
     }
