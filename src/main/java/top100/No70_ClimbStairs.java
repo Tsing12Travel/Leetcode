@@ -61,9 +61,23 @@ public class No70_ClimbStairs {
     }
 
 
+    // 下面这个解法和解法 4 本质一样，节省空间版本
+    public int climbStairs5(int n) {
+        if (n <= 1) return 1;
+
+        int f0 = 1, f1 = 1, res = 0;
+        for (int i = 2; i <= n; i++) {
+            res = f0 + f1;
+            f0 = f1;
+            f1 = res;
+        }
+        return res;
+    }
+
+
     public static void main(String[] args) {
         int n = 45;
         No70_ClimbStairs solution = new No70_ClimbStairs();
-        System.out.println(solution.climbStairs4(n));
+        System.out.println(solution.climbStairs5(n));
     }
 }
