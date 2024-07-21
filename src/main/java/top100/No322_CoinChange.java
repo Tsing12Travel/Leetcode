@@ -46,8 +46,11 @@ public class No322_CoinChange {
 
         for (int i = 0; i < n; i++) {
             for (int c = 0; c <= amount; c++) {
-                if (c < coins[i]) f[i + 1][c] = f[i][c];
-                else f[i + 1][c] = Math.min(f[i][c], f[i + 1][c - coins[i]] + 1);
+                if (c < coins[i]) {
+                    f[i + 1][c] = f[i][c];
+                } else {
+                    f[i + 1][c] = Math.min(f[i][c], f[i + 1][c - coins[i]] + 1);
+                }
             }
         }
 
@@ -65,8 +68,11 @@ public class No322_CoinChange {
 
         for (int i = 0; i < n; i++) {
             for (int c = 0; c <= amount; c++) {
-                if (c < coins[i]) f[(i + 1) % 2][c] = f[i % 2][c];
-                else f[(i + 1) % 2][c] = Math.min(f[i % 2][c], f[(i + 1) % 2][c - coins[i]] + 1);
+                if (c < coins[i]) {
+                    f[(i + 1) % 2][c] = f[i % 2][c];
+                } else {
+                    f[(i + 1) % 2][c] = Math.min(f[i % 2][c], f[(i + 1) % 2][c - coins[i]] + 1);
+                }
             }
         }
 
@@ -80,11 +86,13 @@ public class No322_CoinChange {
         int[] f = new int[amount + 1];
         Arrays.fill(f, Integer.MAX_VALUE / 2);
         f[0] = 0;
+
         for (int x : coins) {
             for (int c = x; c <= amount; c++) {
                 f[c] = Math.min(f[c], f[c - x] + 1);
             }
         }
+
         int ans = f[amount];
         return ans < Integer.MAX_VALUE / 2 ? ans : -1;
     }
