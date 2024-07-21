@@ -71,3 +71,22 @@ public class No198_Rob {
         System.out.println(rob.rob4(nums));
     }
 }
+
+/*
+如果想输出具体方案的话，可以从 f 数组的最后一项出发倒着走，只要发现 f[i + 2] 和 f[i] + nums[i] 是一样的，就表示选了 nums[i]
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        f = [0] * (len(nums) + 2)
+        for i, x in enumerate(nums):
+            f[i + 2] = max(f[i + 1], f[i] + x)
+
+        i = len(nums) - 1
+        while i >= 0:
+            if f[i + 2] == f[i] + nums[i]:  # 说明 f[i+2] 是从 f[i] 转移来的
+                print(i, nums[i])
+                i -= 2
+            else:  # 说明 f[i+2] 是从 f[i+1] 转移来的
+                i -= 1
+
+        return f[-1]
+*/
