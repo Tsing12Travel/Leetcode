@@ -1,0 +1,73 @@
+package top100;
+
+import java.util.Arrays;
+
+public class No198_Rob {
+    // 最原始版本 f(n) = Math.max(f(n - 1), nums[n] + f(n - 2))
+    public int rob(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return 0;
+        return dfs(len - 1, nums);
+    }
+
+    private int dfs(int len, int[] nums) {
+        if (len < 0) return 0;
+        return Math.max(nums[len] + dfs(len - 2, nums), dfs(len - 1, nums));
+    }
+
+
+    // 递归搜索 + 保存计算结果 = 记忆化搜索
+    public int rob2(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return 0;
+        int[] dp = new int[len];
+        Arrays.fill(dp, -1);  // -1 表示没有计算过
+
+        // 定义全局变量 int[] dp, nums 可以让 dfs 参数更简洁(不用每次都携带参数)
+        return dfs2(len - 1, dp, nums);  // 从最后一个房子开始思考
+    }
+
+    // dfs(i) 表示从 nums[0] 到 nums[i] 最多能偷多少
+    private int dfs2(int i, int[] dp, int[] nums) {
+        if (i < 0) return 0;  // 递归边界（没有房子）
+        if (dp[i] != -1) return dp[i];  // 之前计算过
+
+        int res = Math.max(nums[i] + dfs2(i - 2, dp, nums), dfs2(i - 1, dp, nums));
+        dp[i] = res;  // 记忆化：保存计算结果
+        return res;
+    }
+
+
+    // 1:1 翻译成递推
+    public int rob3(int[] nums) {
+        int len = nums.length;
+        int[] dp = new int[len + 2];
+
+        for (int i = 0; i < len; i++) {
+            dp[i + 2] = Math.max(nums[i] + dp[i], dp[i + 1]);
+        }
+
+        return dp[len + 1];
+    }
+
+
+    public int rob4(int[] nums) {
+        int res = 0, f0 = 0, f1 = 0;
+
+        for (int x : nums) {
+            res = Math.max(f0 + x, f1);
+            f0 = f1;
+            f1 = res;
+        }
+
+        return res;
+    }
+
+
+    public static void main(String[] args) {
+        // int[] nums = {1, 2, 3, 1};
+        int[] nums = {2, 7, 9, 3, 1};
+        No198_Rob rob = new No198_Rob();
+        System.out.println(rob.rob4(nums));
+    }
+}
