@@ -37,7 +37,7 @@ public class No322_CoinChange {
     }
 
 
-    //
+    // 1:1 翻译成递推
     public int coinChange2(int[] coins, int amount) {
         int n = coins.length;
         int[][] f = new int[n + 1][amount + 1];
@@ -52,6 +52,25 @@ public class No322_CoinChange {
         }
 
         int ans = f[n][amount];
+        return ans < Integer.MAX_VALUE / 2 ? ans : -1;
+    }
+
+
+    // 空间优化：两个数组（滚动数组）
+    public int coinChange3(int[] coins, int amount) {
+        int n = coins.length;
+        int[][] f = new int[2][amount + 1];
+        Arrays.fill(f[0], Integer.MAX_VALUE / 2);
+        f[0][0] = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int c = 0; c <= amount; c++) {
+                if (c < coins[i]) f[(i + 1) % 2][c] = f[i % 2][c];
+                else f[(i + 1) % 2][c] = Math.min(f[i % 2][c], f[(i + 1) % 2][c - coins[i]] + 1);
+            }
+        }
+
+        int ans = f[n % 2][amount];
         return ans < Integer.MAX_VALUE / 2 ? ans : -1;
     }
 
