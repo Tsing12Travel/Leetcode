@@ -27,9 +27,28 @@ public class No118_Generate {
     }
 
 
+    public List<List<Integer>> generate2(int numRows) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (numRows == 0) return res;
+
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> row = new ArrayList<>();
+            for (int j = 0; j <= i; j++) {
+                if (j == 0 || j == i) {
+                    row.add(1);
+                } else {
+                    row.add(res.get(i - 1).get(j - 1) + res.get(i - 1).get(j));
+                }
+            }
+            res.add(row);
+        }
+        return res;
+    }
+
+
     public static void main(String[] args) {
         int numRows = 5;
         No118_Generate sol = new No118_Generate();
-        System.out.println(sol.generate(numRows));
+        System.out.println(sol.generate2(numRows));
     }
 }
