@@ -23,7 +23,7 @@ public class No279_NumSquares {
 
     static {
         for (int[] row : memo) {
-            Arrays.fill(row, -1);
+            Arrays.fill(row, -1);  // -1 表示没有计算过
         }
     }
 
@@ -36,15 +36,15 @@ public class No279_NumSquares {
             return left == 0 ? 0 : Integer.MAX_VALUE;
         }
 
-        if (memo[i][left] != -1) {
+        if (memo[i][left] != -1) {  // 之前计算过
             return memo[i][left];
         }
 
-        if (left < i * i) {
+        if (left < i * i) {  // 只能不选
             return dfs(i - 1, left);
         }
 
-        memo[i][left] = Math.min(dfs(i - 1, left), dfs(i, left - i * i) + 1);
+        memo[i][left] = Math.min(dfs(i - 1, left), dfs(i, left - i * i) + 1);  // 不选 vs 选
         return memo[i][left];
     }
 
