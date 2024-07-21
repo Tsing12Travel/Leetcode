@@ -109,9 +109,47 @@ public class No279_NumSquares {
     }
 
 
+    // 数学:「四平方和定理」
+    /* 四平方和定理证明了任意一个正整数都可以被表示为至多四个正整数的平方和。这给出了本题的答案的上界。
+    同时四平方和定理包含了一个更强的结论：当且仅当 n 不等于 4^k × (8m + 7) 时，n 可以被表示为至多三个正整数的平方和。
+    因此，当 n 不等于 4^k × (8m + 7)，n 只能被表示为四个正整数的平方和。此时我们可以直接返回 4 */
+    public int numSquares5(int n) {
+        if (isPerfectSquare(n)) {
+            return 1;
+        }
+
+        if (checkAnswer4(n)) {
+            return 4;
+        }
+
+        for (int i = 1; i * i <= n; i++) {
+            int j = n - i * i;
+            if (isPerfectSquare(j)) {
+                return 2;
+            }
+        }
+
+        return 3;
+    }
+
+    // 判断是否为完全平方数
+    public boolean isPerfectSquare(int x) {
+        int y = (int) Math.sqrt(x);
+        return y * y == x;
+    }
+
+    // 判断是否能表示为 4^k * (8m + 7)
+    public boolean checkAnswer4(int x) {
+        while (x % 4 == 0) {
+            x /= 4;
+        }
+        return x % 8 == 7;
+    }
+
+
     public static void main(String[] args) {
         int n = 12;
         No279_NumSquares solution = new No279_NumSquares();
-        System.out.println(solution.numSquares3(n));
+        System.out.println(solution.numSquares5(n));
     }
 }
