@@ -29,7 +29,7 @@ public class No322_CoinChange {
             return memo[i][left];
         }
 
-        if (left < coins[i]) {
+        if (left < coins[i]) {  // 当前零钱值大于剩余 money 值，故不能选当前零钱值
             return memo[i][left] = dfs(i - 1, left);
         }
 
