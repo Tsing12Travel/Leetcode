@@ -49,9 +49,69 @@ public class No279_NumSquares {
     }
 
 
+    // 1:1 翻译成递推
+    private static final int N = 100;
+    private static final int[][] f = new int[101][N + 1];
+
+    static {
+        Arrays.fill(f[0], Integer.MAX_VALUE);
+        f[0][0] = 0;
+        for (int i = 1; i * i <= N; i++) {
+            for (int j = 0; j <= N; j++) {
+                if (j < i * i) {  // 只能不选
+                    f[i][j] = f[i - 1][j];
+                } else {
+                    f[i][j] = Math.min(f[i - 1][j], f[i][j - i * i] + 1);  // 不选 vs 选
+                }
+            }
+        }
+    }
+
+    public int numSquares2(int n) {
+        return f[(int) Math.sqrt(n)][n];  // 也可以写 f[100][n]
+    }
+
+
+    // 空间优化
+    private static final int NN = 10000;
+    private static final int[][] dp = new int[101][NN + 1];
+
+    static {
+        Arrays.fill(dp[0], Integer.MAX_VALUE);
+        dp[0][0] = 0;
+        for (int i = 1; i * i <= NN; i++) {
+            for (int j = 0; j <= NN; j++) {
+                if (j < i * i) {  // 只能不选
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - i * i] + 1);  // 不选 vs 选
+                }
+            }
+        }
+    }
+
+    public int numSquares3(int n) {
+        return dp[(int) Math.sqrt(n)][n];  // 也可以写 dp[100][n]
+    }
+
+
+    // 动态规划
+    public int numSquares4(int n) {
+        int[] f = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            int minn = Integer.MAX_VALUE;
+            for (int j = 1; j * j <= i; j++) {
+                minn = Math.min(minn, f[i - j * j]);
+            }
+            f[i] = minn + 1;
+        }
+        return f[n];
+    }
+
+
     public static void main(String[] args) {
         int n = 12;
         No279_NumSquares solution = new No279_NumSquares();
-        System.out.println(solution.numSquares(n));
+        System.out.println(solution.numSquares3(n));
     }
 }
