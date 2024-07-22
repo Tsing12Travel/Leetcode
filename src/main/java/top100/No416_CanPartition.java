@@ -79,10 +79,35 @@ public class No416_CanPartition {
     }
 
 
+    // 空间优化
+    public boolean canPartition3(int[] nums) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (sum % 2 != 0) return false;
+
+        sum /= 2;  // 注意这里把 s 减半了
+        int len = nums.length;
+        boolean[] f = new boolean[sum + 1];
+        f[0] = true;
+        int s2 = 0;
+
+        for (int num : nums) {
+            s2 = Math.min(s2 + num, sum);
+            for (int j = s2; j >= num; j--) {
+                f[j] = f[j] || f[j - num];
+            }
+        }
+
+        return f[sum];
+    }
+
+
     public static void main(String[] args) {
         // int[] nums = new int[]{1, 5, 11, 5};
         int[] nums = new int[]{2, 1, 1, 2};
         No416_CanPartition sol = new No416_CanPartition();
-        System.out.println(sol.canPartition2(nums));
+        System.out.println(sol.canPartition3(nums));
     }
 }
