@@ -15,7 +15,6 @@ public class No152_MaxProduct {
 
     dp[i][1] 表示：以 nums[i] 结尾的连续子序列的乘积的最大值；
     dp[i][0] 表示：以 nums[i] 结尾的连续子序列的乘积的最小值 */
-
     public int maxProduct(int[] nums) {
         int len = nums.length;
         if (len == 0) return 0;
@@ -43,10 +42,41 @@ public class No152_MaxProduct {
     }
 
 
+    // 也可设置两个状态数组，语义会更清晰一些
+    public int maxProduct2(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return 0;
+
+        // 状态定义：以索引 i 结尾
+        // 思考清楚一种特例：[2, -1, 3]，前面乘起来是负数的话，倒不如另起炉灶
+        int[] minDp = new int[len];
+        int[] maxDp = new int[len];
+
+        minDp[0] = nums[0];
+        maxDp[0] = nums[0];
+
+        for (int i = 1; i < len; i++) {
+            if (nums[i] >= 0) {
+                maxDp[i] = Math.max(maxDp[i - 1] * nums[i], nums[i]);
+                minDp[i] = Math.min(minDp[i - 1] * nums[i], nums[i]);
+            } else {
+                maxDp[i] = Math.max(minDp[i - 1] * nums[i], nums[i]);
+                minDp[i] = Math.min(maxDp[i - 1] * nums[i], nums[i]);
+            }
+        }
+
+        int res = nums[0];
+        for (int i = 1; i < len; i++) {
+            res = Math.max(res, Math.max(maxDp[i], minDp[i]));
+        }
+        return res;
+    }
+
+
     public static void main(String[] args) {
-        // int[] nums = {2, 3, -2, 4};
-        int[] nums = {-2, 0, -1};
+        int[] nums = {2, 3, -2, 4};
+        // int[] nums = {-2, 0, -1};
         No152_MaxProduct sol = new No152_MaxProduct();
-        System.out.println(sol.maxProduct(nums));
+        System.out.println(sol.maxProduct2(nums));
     }
 }
