@@ -98,10 +98,26 @@ public class No322_CoinChange {
     }
 
 
+    public int coinChange5(int[] coins, int amount) {
+        int n = coins.length;
+        int[] dp = new int[amount + 1];
+        for (int i = 1; i <= amount; i++) {
+            int min = amount + 1;
+            for (int c : coins) { // 遍历硬币的可选额
+                if (i - c >= 0) {
+                    min = Math.min(min, dp[i - c]);
+                }
+            }
+            dp[i] = min + 1;
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+
+
     public static void main(String[] args) {
         int[] coins = {1, 2, 5};
         int amount = 11;
         No322_CoinChange sol = new No322_CoinChange();
-        System.out.println(sol.coinChange(coins, amount));
+        System.out.println(sol.coinChange5(coins, amount));
     }
 }
