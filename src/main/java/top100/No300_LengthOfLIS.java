@@ -1,6 +1,7 @@
 package top100;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class No300_LengthOfLIS {
@@ -65,10 +66,8 @@ public class No300_LengthOfLIS {
         int[] dp = new int[len];
         int maxLIS = 1;
 
-        // 每个位置的最小长度子序列至少为 1
-        for (int i = 0; i < len; i++) {
-            dp[i] = 1;
-        }
+        // 每个位置的最小长度子序列至少为 1。初始状态：dp[i] 所有元素置 1，含义是每个元素都至少可以单独成为子序列，此时长度都为 1
+        Arrays.fill(dp, 1);
 
         for (int i = 1; i < len; i++) {
             for (int j = 0; j < i; j++) {
