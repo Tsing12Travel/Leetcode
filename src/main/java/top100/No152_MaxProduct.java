@@ -73,10 +73,39 @@ public class No152_MaxProduct {
     }
 
 
+    // 因为每一个状态只与前一个状态有关，可以使用「滚动变量」技巧，使用常数个变量完成这道问题
+    public int maxProduct3(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return 0;
+
+        int preMax = nums[0];
+        int preMin = nums[0];
+        int curMax;
+        int curMin;
+
+        int res = nums[0];
+        for (int i = 1; i < len; i++) {
+            if (nums[i] >= 0) {
+                curMax = Math.max(nums[i] * preMax, nums[i]);
+                curMin = Math.min(nums[i] * preMin, nums[i]);
+            } else {
+                curMax = Math.max(nums[i] * preMin, nums[i]);
+                curMin = Math.min(nums[i] * preMax, nums[i]);
+            }
+            res = Math.max(res, curMax);
+
+            // 滚动变量
+            preMax = curMax;
+            preMin = curMin;
+        }
+        return res;
+    }
+
+
     public static void main(String[] args) {
         int[] nums = {2, 3, -2, 4};
         // int[] nums = {-2, 0, -1};
         No152_MaxProduct sol = new No152_MaxProduct();
-        System.out.println(sol.maxProduct2(nums));
+        System.out.println(sol.maxProduct3(nums));
     }
 }
