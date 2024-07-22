@@ -53,6 +53,33 @@ public class No300_LengthOfLIS {
     }
 
 
+    public int lengthOfLIS3(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int len = nums.length;
+        int[] dp = new int[len];
+        int maxLIS = 1;
+
+        // 每个位置的最小长度子序列至少为 1
+        for (int i = 0; i < len; i++) {
+            dp[i] = 1;
+        }
+
+        for (int i = 1; i < len; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            maxLIS = Math.max(maxLIS, dp[i]);
+        }
+
+        return maxLIS;
+    }
+
+
     public static void main(String[] args) {
         int[] nums = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
         No300_LengthOfLIS sol = new No300_LengthOfLIS();
