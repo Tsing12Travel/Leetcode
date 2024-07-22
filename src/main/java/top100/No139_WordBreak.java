@@ -26,6 +26,24 @@ public class No139_WordBreak {
     }
 
 
+    public boolean wordBreak2(String s, List<String> wordDict) {
+        boolean[] valid = new boolean[s.length() + 1];
+        valid[0] = true;
+
+        for (int i = 1; i <= s.length(); i++) {
+            for (String word : wordDict) {
+                int len = word.length();
+                if (i >= len && valid[i - len] && word.equals(s.substring(i - len, i))) {
+                    valid[i] = true;
+                    break;
+                }
+            }
+        }
+
+        return valid[s.length()];
+    }
+
+
     public static void main(String[] args) {
         String s = "applepenapple";
         List<String> wordDict = new ArrayList<>();
