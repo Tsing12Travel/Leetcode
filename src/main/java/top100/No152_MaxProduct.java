@@ -1,5 +1,7 @@
 package top100;
 
+// 「滑动窗口」和「双指针」在本质上「暴力解法」的优化，使用两个变量同向移动或者相向移动的过程中，排除了很多不必要的区间，但依然不丢失最优解。这道题没有这样的特点
+// 一般问最优解而不问最优解怎么来的，先往 dp 上靠，然后尝试一下什么广度优先遍历啊，贪心啥的
 public class No152_MaxProduct {
     // dp[i] 以下标 i 结尾的连续子序列的乘积的最大值
     // 状态转移方程可能是：dp[i] = max(dp[i - 1] * nums[i], nums[i])
@@ -17,6 +19,7 @@ public class No152_MaxProduct {
     public int maxProduct(int[] nums) {
         int len = nums.length;
         if (len == 0) return 0;
+        // 状态定义：以索引 i 结尾
         int[][] dp = new int[len][2];
 
         dp[0][0] = nums[0];
