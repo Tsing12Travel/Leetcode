@@ -1,5 +1,7 @@
 package top100;
 
+import java.util.Arrays;
+
 public class No1143_longestCommonSubsequence {
     // 定义 f[i][j] 表示字符串 text1 的 [1, i] 区间和字符串 text2 的 [1, j] 区间的最长公共子序列长度（下标从 1 开始）
     public int longestCommonSubsequence(String text1, String text2) {
@@ -40,6 +42,37 @@ public class No1143_longestCommonSubsequence {
             }
         }
         return memo[m][n];
+    }
+
+
+    // 递归搜索 + 保存计算结果 = 记忆化搜索
+    private char[] x, y;
+    private int[][] cache;
+
+    public int longestCommonSubsequence3(String text1, String text2) {
+        this.x = text1.toCharArray();
+        this.y = text2.toCharArray();
+
+        int m = x.length, n = y.length;
+        cache = new int[m + 1][n + 1];
+
+        for (int[] row : cache) {
+            Arrays.fill(row, -1);  // -1 表示没有访问过
+        }
+
+        return dfs(m - 1, n - 1);
+    }
+
+    private int dfs(int i, int j) {
+        if (i < 0 || j < 0) return 0;
+
+        if (cache[i][j] != 0) return cache[i][j];
+
+        if (x[i] == y[j]) {
+            return cache[i][j] = dfs(i - 1, j - 1) + 1;
+        }
+
+        return cache[i][j] = Math.max(dfs(i - 1, j), dfs(i, j - 1));
     }
 
 
