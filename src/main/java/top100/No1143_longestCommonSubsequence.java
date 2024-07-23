@@ -99,10 +99,45 @@ public class No1143_longestCommonSubsequence {
     }
 
 
+    // 空间优化：两个数组（滚动数组）
+    public int longestCommonSubsequence5(String text1, String text2) {
+        char[] x = text1.toCharArray();
+        char[] y = text2.toCharArray();
+
+        int m = x.length, n = y.length;
+        int[][] f = new int[2][n + 1];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                f[(i + 1) % 2][j + 1] = x[i] == y[j] ? f[i % 2][j] + 1 : Math.max(f[(i + 1) % 2][j], f[i % 2][j + 1]);
+            }
+        }
+
+        return f[m % 2][n];
+    }
+
+
+    // 空间优化：一个数组
+    public int longestCommonSubsequence6(String text1, String text2) {
+        char[] y = text2.toCharArray();
+        int m = y.length;
+        int[] f = new int[m + 1];
+
+        for (char x : text1.toCharArray()) {
+            for (int i = 0, pre = 0; i < m; i++) {
+                int temp = f[i + 1];
+                f[i + 1] = x == y[i] ? pre + 1 : Math.max(f[i + 1], f[i]);
+                pre = temp;
+            }
+        }
+
+        return f[m];
+    }
+
+
     public static void main(String[] args) {
         String text1 = "ace";
         String text2 = "abcde";
         No1143_longestCommonSubsequence sol = new No1143_longestCommonSubsequence();
-        System.out.println(sol.longestCommonSubsequence4(text1, text2));
+        System.out.println(sol.longestCommonSubsequence6(text1, text2));
     }
 }
