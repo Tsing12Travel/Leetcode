@@ -21,6 +21,28 @@ public class No1143_longestCommonSubsequence {
     }
 
 
+    public int longestCommonSubsequence2(String text1, String text2) {
+        int m = text1.length();
+        int n = text2.length();
+        char[] a = text1.toCharArray();
+        char[] b = text2.toCharArray();
+        int[][] memo = new int[m + 1][n + 1];
+
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0 || j == 0) {
+                    memo[i][j] = 0;
+                } else if (a[i - 1] == b[j - 1]) {
+                    memo[i][j] = memo[i - 1][j - 1] + 1;
+                } else {
+                    memo[i][j] = Math.max(memo[i - 1][j], memo[i][j - 1]);
+                }
+            }
+        }
+        return memo[m][n];
+    }
+
+
     public static void main(String[] args) {
         String text1 = "ace";
         String text2 = "abcde";
