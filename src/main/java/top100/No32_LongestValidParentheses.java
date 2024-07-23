@@ -43,7 +43,7 @@ public class No32_LongestValidParentheses {
 
             if (left == right) {
                 res = Math.max(res, 2 * left);
-            } else if (left > right) {
+            } else if (right > left) {
                 left = 0;
                 right = 0;
             }
