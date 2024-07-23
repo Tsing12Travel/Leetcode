@@ -15,7 +15,7 @@ public class No32_LongestValidParentheses {
         for (int i = 0; i < len; i++) {
             if (s.charAt(i) == '(') {
                 stack.push(i);
-            } else {
+            } else {  // ')'
                 stack.pop();
                 if (stack.isEmpty()) {
                     stack.push(i);
@@ -26,6 +26,30 @@ public class No32_LongestValidParentheses {
         }
 
         return res;
+    }
+
+
+    public static int longestValidParentheses1(String s) {
+        int max = 0;
+        Deque<Integer> stack = new LinkedList<>();
+        for (int i = 0; i != s.length(); i++) {
+            if (s.charAt(i) == '(')
+                stack.push(i);
+            else {  // ')'
+                if (!stack.isEmpty() && s.charAt(stack.peek()) == '(') {
+                    stack.poll();  // 匹配的左括号出栈
+                    if (!stack.isEmpty()) {
+                        max = Math.max(max, i - stack.peek());
+                    } else {
+                        // 这里是因为栈内元素全部出栈，说明从头开始的序列都是有效的，那么长度就是当前序号 +1
+                        max = Math.max(max, i + 1);
+                    }
+                } else {
+                    stack.push(i);
+                }
+            }
+        }
+        return max;
     }
 
 
