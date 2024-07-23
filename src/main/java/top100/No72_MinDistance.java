@@ -37,6 +37,38 @@ public class No72_MinDistance {
     }
 
 
+    Integer[][] memo;
+
+    public int minDistance2(String text1, String text2) {
+        // dfs(i, j) 表示 s 的 0...i 个字符和 t 的 0...j 个字符的编辑距离
+        // 状态转移方程: dfs(i, j) = ?
+        // dfs(i - 1, j - 1);      if s[i] == t[j]
+        // dfs(i - 1, j) + 1;      if s[i] != t[j] (在 s 上删除一个字符)
+        // dfs(i, j - 1) + 1;      if s[i] != t[j] (在 s 上插入一个字符)
+        // dfs(i - 1, j - 1) + 1;  if s[i] != t[j] (在 s 上替换一个字符)
+
+        char[] s = text1.toCharArray(), t = text2.toCharArray();
+        int n = s.length, m = t.length;
+        memo = new Integer[n][m];
+        return dfs(n - 1, m - 1, s, t);
+    }
+
+    public int dfs(int i, int j, char[] cas, char[] cat) {
+        if (i < 0 || j < 0) return Math.max(i, j) + 1;
+        if (memo[i][j] != null) return memo[i][j];
+
+        int ans;
+        if (cas[i] == cat[j]) {
+            ans = dfs(i - 1, j - 1, cas, cat);
+        } else {
+            int insert = dfs(i, j - 1, cas, cat);
+            int delete = dfs(i - 1, j, cas, cat);
+            int remove = dfs(i - 1, j - 1, cas, cat);
+            ans = Math.min(insert, Math.min(delete, remove)) + 1;
+        }
+        return memo[i][j] = ans;
+    }
+
     public static void main(String[] args) {
         String word1 = "intention";
         String word2 = "execution";
