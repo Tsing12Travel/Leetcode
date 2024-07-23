@@ -76,10 +76,33 @@ public class No1143_longestCommonSubsequence {
     }
 
 
+    // 1:1 翻译成递推
+    public int longestCommonSubsequence4(String text1, String text2) {
+        char[] x = text1.toCharArray();
+        char[] y = text2.toCharArray();
+
+        int m = x.length, n = y.length;
+        int[][] f = new int[m + 1][n + 1];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                f[i + 1][j + 1] = x[i] == y[j] ? f[i][j] + 1 : Math.max(f[i + 1][j], f[i][j + 1]);
+                /* if (x[i] == y[j]) {
+                    f[i + 1][j + 1] = f[i][j] + 1;
+                } else {
+                    f[i + 1][j + 1] = Math.max(f[i + 1][j], f[i][j + 1]);
+                } */
+            }
+        }
+
+        return f[m][n];
+    }
+
+
     public static void main(String[] args) {
         String text1 = "ace";
         String text2 = "abcde";
         No1143_longestCommonSubsequence sol = new No1143_longestCommonSubsequence();
-        System.out.println(sol.longestCommonSubsequence(text1, text2));
+        System.out.println(sol.longestCommonSubsequence4(text1, text2));
     }
 }
