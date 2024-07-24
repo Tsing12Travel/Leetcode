@@ -69,12 +69,39 @@ public class No31_NextPermutation {
     }
 
 
+    // 做法与上面一致，少定义一个变量(可读性下降，内存消耗竟然也比上面方法多，不理解)。注意调用了上面的 swap() 和 reverse() 方法
+    public void nextPermutation2(int[] nums) {
+        int len = nums.length;
+        if (len <= 1) return;
+
+        int i = len - 2;
+        int j = len - 1;
+
+        // 找到 nums[i] < nums[j]
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            i--;
+        }
+
+        if (i >= 0) {
+            // 找到 nums[i] < nums[j]
+            while (nums[i] >= nums[j]) {
+                j--;
+            }
+
+            swap(nums, i, j);
+        }
+
+        // 让下标区间在 [j, len - 1] 内的数升序排列
+        reverse(nums, i + 1, len - 1);
+    }
+
+
     public static void main(String[] args) {
         // int[] nums = {1, 2, 3};
         int[] nums = {3, 2, 1};
         // int[] nums = {1, 1, 5};
         No31_NextPermutation sol = new No31_NextPermutation();
-        sol.nextPermutation(nums);
+        sol.nextPermutation2(nums);
         System.out.println(Arrays.toString(nums));
     }
 }
