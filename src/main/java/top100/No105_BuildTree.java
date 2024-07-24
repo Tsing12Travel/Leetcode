@@ -1,9 +1,12 @@
 package top100;
 
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class No105_BuildTree {
+    // 递归
     Map<Integer, Integer> indexMap;
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
@@ -41,6 +44,7 @@ public class No105_BuildTree {
     }
 
 
+    // 递归
     int[] preorder;
     HashMap<Integer, Integer> dic = new HashMap<>();
 
@@ -64,6 +68,38 @@ public class No105_BuildTree {
         // `root + i - left + 1` 含义为 `根节点索引 + 左子树长度 + 1`
         node.right = recur(root + i - left + 1, i + 1, right);  // 开启右子树递归
         return node;                                                      // 回溯返回根节点
+    }
+
+
+    // 迭代
+    public TreeNode buildTree3(int[] preorder, int[] inorder) {
+        if (preorder == null || preorder.length == 0) {
+            return null;
+        }
+
+        TreeNode root = new TreeNode(preorder[0]);
+        Deque<TreeNode> stack = new LinkedList<TreeNode>();
+        stack.push(root);
+
+        int inorderIndex = 0;
+        for (int i = 1; i < preorder.length; i++) {
+            int preorderVal = preorder[i];
+            TreeNode node = stack.peek();
+
+            if (node.val != inorder[inorderIndex]) {
+                node.left = new TreeNode(preorderVal);
+                stack.push(node.left);
+            } else {
+                while (!stack.isEmpty() && stack.peek().val == inorder[inorderIndex]) {
+                    node = stack.pop();
+                    inorderIndex++;
+                }
+
+                node.right = new TreeNode(preorderVal);
+                stack.push(node.right);
+            }
+        }
+        return root;
     }
 
 
