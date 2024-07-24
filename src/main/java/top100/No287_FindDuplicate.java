@@ -1,8 +1,8 @@
 package top100;
 
 public class No287_FindDuplicate {
-    // 「Floyd 判圈算法」
-    // 如果有限状态机、迭代函数或者链表上存在环，那么在某个环上以不同速度前进的2个指针必定会在某个时刻相遇
+    // 快慢指针
+    // Floyd 判圈算法：如果有限状态机、迭代函数或者链表上存在环，那么在某个环上以不同速度前进的 2 个指针必定会在某个时刻相遇
     public int findDuplicate(int[] nums) {
         int slow = 0, fast = 0;
 
@@ -41,6 +41,35 @@ public class No287_FindDuplicate {
             } else {
                 r = mid - 1;
                 ans = mid;
+            }
+        }
+        return ans;
+    }
+
+
+    // 二进制：将所有数二进制展开按位考虑如何找出重复的数，如果我们能确定重复数每一位是 1 还是 0 就可以按位还原出重复的数是什么
+    public int findDuplicate3(int[] nums) {
+        int n = nums.length, ans = 0;
+        int bit_max = 31;
+
+        while (((n - 1) >> bit_max) == 0) {
+            bit_max -= 1;
+        }
+
+        for (int bit = 0; bit <= bit_max; ++bit) {
+            int x = 0, y = 0;
+            for (int i = 0; i < n; ++i) {
+                if ((nums[i] & (1 << bit)) != 0) {
+                    x += 1;
+                }
+
+                if (i >= 1 && ((i & (1 << bit)) != 0)) {
+                    y += 1;
+                }
+            }
+
+            if (x > y) {
+                ans |= 1 << bit;
             }
         }
         return ans;
