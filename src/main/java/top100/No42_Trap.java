@@ -50,6 +50,29 @@ public class No42_Trap {
     }
 
 
+    // 前后缀分解。后两个 for 循环可以合并成一个循环，此处为了方便阅读，没有合并
+    public int trap3(int[] height) {
+        int n = height.length;
+        int[] preMax = new int[n];  // preMax[i] 表示从 height[0] 到 height[i] 的最大值
+        preMax[0] = height[0];
+        for (int i = 1; i < n; i++) {
+            preMax[i] = Math.max(preMax[i - 1], height[i]);
+        }
+
+        int[] sufMax = new int[n];  // sufMax[i] 表示从 height[i] 到 height[n-1] 的最大值
+        sufMax[n - 1] = height[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            sufMax[i] = Math.max(sufMax[i + 1], height[i]);
+        }
+
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            ans += Math.min(preMax[i], sufMax[i]) - height[i];  // 累加每个水桶能接多少水
+        }
+        return ans;
+    }
+
+
     public static void main(String[] args) {
         int[] height = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
         No42_Trap test = new No42_Trap();
