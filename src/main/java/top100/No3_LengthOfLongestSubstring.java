@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 /* 3.无重复字符的最长字串 */
-// 给定一个字符串 s ，请你找出其中不含有重复字符的最长子串的长度。
+// 给定一个字符串 s，请你找出其中不含有重复字符的最长子串的长度。
 
 public class No3_LengthOfLongestSubstring {
     public static int lengthOfLongestSubstring(String s) {
@@ -37,9 +37,9 @@ public class No3_LengthOfLongestSubstring {
 
 
     /* 步骤
-    * 哈希表 map 统计： 指针 j 遍历字符 s ，哈希表统计字符 s[j] 最后一次出现的索引
-    * 更新左指针 i ： 根据上轮左指针 i 和 map[s[j]] ，每轮更新左边界 i ，保证区间 [i+1,j] 内无重复字符且最大
-    * 更新结果 res ： 取上轮 res 和本轮双指针区间 [i+1,j] 的宽度（即 j−i ）中的最大值
+    * 哈希表 map 统计：指针 j 遍历字符 s ，哈希表统计字符 s[j] 最后一次出现的索引
+    * 更新左指针 i ：根据上轮左指针 i 和 map[s[j]] ，每轮更新左边界 i ，保证区间 [i + 1, j] 内无重复字符且最大
+    * 更新结果 res ：取上轮 res 和本轮双指针区间 [i + 1, j] 的宽度（即 j − i ）中的最大值
     */
     public static int lengthOfLongestSubstring2(String s) {
         int len = s.length();
