@@ -1,5 +1,8 @@
 package top100;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class No42_Trap {
     // 相向双指针
     // 注意 while 循环可以不加等号，因为在「谁小移动谁」的规则下，相遇的位置一定是最高的柱子，这个柱子是无法接水的
@@ -70,6 +73,28 @@ public class No42_Trap {
         int ans = 0;
         for (int i = 0; i < n; i++) {
             ans += Math.min(preMax[i], sufMax[i]) - height[i];  // 累加每个水桶能接多少水
+        }
+        return ans;
+    }
+
+
+    // 单调栈：找上一个更大元素，在找的过程中填坑
+    // 上面的方法相当于「竖着」计算面积，单调栈的做法相当于「横着」计算面积。
+    // 注意 while 中加了等号，这可以让栈中没有重复元素，从而在有很多重复元素的情况下，使用更少的空间
+    public int trap4(int[] height) {
+        int ans = 0;
+        Deque<Integer> st = new ArrayDeque<>();
+        for (int i = 0; i < height.length; i++) {
+            while (!st.isEmpty() && height[i] >= height[st.peek()]) {
+                int bottomH = height[st.pop()];
+                if (st.isEmpty()) {
+                    break;
+                }
+                int left = st.peek();
+                int dh = Math.min(height[left], height[i]) - bottomH;  // 面积的高
+                ans += dh * (i - left - 1);
+            }
+            st.push(i);
         }
         return ans;
     }
