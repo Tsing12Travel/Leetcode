@@ -1,11 +1,13 @@
 package top100;
 
 public class No42_Trap {
+    // 相向双指针
+    // 注意 while 循环可以不加等号，因为在「谁小移动谁」的规则下，相遇的位置一定是最高的柱子，这个柱子是无法接水的
     public int trap(int[] height) {
         int left = 0;
         int right = height.length - 1;
-        int preMax = 0;
-        int sufMax = 0;
+        int preMax = 0;  // 前缀最大值，随着左指针 left 的移动而更新
+        int sufMax = 0;  // 后缀最大值，随着右指针 right 的移动而更新
         int res = 0;
 
         while (left < right) {
