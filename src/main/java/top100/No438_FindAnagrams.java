@@ -34,6 +34,7 @@ public class No438_FindAnagrams {
             }
 
             // 缩小窗口
+            // 这里可以用 while 或 if，原因是上面 right 每次只 +1，也就是窗口右边界每右移一步都判断是否需要缩小窗口
             while (right - left >= p.length()) {
                 // 当窗口符合条件时，把起始索引加入 result 中
                 if (valid == need.size()) res.add(left);
