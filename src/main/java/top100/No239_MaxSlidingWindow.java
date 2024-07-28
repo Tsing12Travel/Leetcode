@@ -41,8 +41,39 @@ public class No239_MaxSlidingWindow {
     }
 
 
-    // 暴力解法
+    // 未形成窗口和形成窗口不拆开
     public int[] maxSlidingWindow2(int[] nums, int k) {
+        int len = nums.length;
+        if (len == 0 || k == 0) return new int[0];
+
+        Deque<Integer> deque = new ArrayDeque<>();
+        int[] res = new int[len - k + 1];
+
+        for (int i = 0; i < len; i++) {
+            // 移除窗口之外的索引
+            if (!deque.isEmpty() && deque.peek() < i - k + 1) {
+                deque.poll();
+            }
+
+            // 移除所有比当前元素小的元素
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
+            }
+
+            // 添加当前元素的索引
+            deque.offer(i);
+
+            // 当 i 达到窗口大小时，开始记录窗口最大值
+            if (i >= k - 1) {
+                res[i - k + 1] = nums[deque.peek()];
+            }
+        }
+        return res;
+    }
+
+
+    // 暴力解法
+    public int[] maxSlidingWindow3(int[] nums, int k) {
         int n = nums.length;
         if (n == 0 || k <= 0) return new int[0];
 
@@ -64,7 +95,7 @@ public class No239_MaxSlidingWindow {
         int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
         int k = 3;
         No239_MaxSlidingWindow slidingWindow = new No239_MaxSlidingWindow();
-        int[] res = slidingWindow.maxSlidingWindow(nums, k);
+        int[] res = slidingWindow.maxSlidingWindow2(nums, k);
         System.out.println(Arrays.toString(res));
     }
 }
