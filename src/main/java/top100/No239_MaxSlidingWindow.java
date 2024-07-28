@@ -6,10 +6,14 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 public class No239_MaxSlidingWindow {
+    /* 遍历数组时，每轮保证单调队列 deque ：
+    deque 内 仅包含窗口内的元素 ⇒ 每轮窗口滑动移除了元素 nums[i − 1] ，需将 deque 内的对应元素一起删除。
+    deque 内的元素 非严格递减 ⇒ 每轮窗口滑动添加了元素 nums[j + 1] ，需将 deque 内所有 < nums[j + 1] 的元素删除。 */
     public int[] maxSlidingWindow(int[] nums, int k) {
         int len = nums.length;
         if (len == 0 || k == 0) return new int[0];
 
+        // 窗口对应的数据结构为 双端队列 ，本题使用 单调队列
         // Deque<Integer> deque = new LinkedList<>();  // 增加、删除多的场景 LinkedList 合适
         Deque<Integer> deque = new ArrayDeque<>();  // 使用 ArrayDeque 更省空间。但需要注意使用场景，查询、修改多的场景使用 array 合适
         int[] res = new int[len - k + 1];
