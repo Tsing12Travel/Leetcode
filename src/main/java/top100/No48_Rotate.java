@@ -7,7 +7,7 @@ public class No48_Rotate {
         「第 i 行」元素旋转到「第 n−1−i 列」元素；
         「第 j 列」元素旋转到「第 j 行」元素；
     因此，对于矩阵任意第 i 行、第 j 列元素 matrix[i][j] ，矩阵旋转 90º 后「元素位置旋转公式」为：
-        matrix[i][j] → matrix[j][n−1−i]
+        matrix[i][j] → matrix[j][n − 1 − i]
         原索引位置 → 旋转后索引位置*/
     public void rotate(int[][] matrix) {
         int row_len = matrix.length;
@@ -26,6 +26,7 @@ public class No48_Rotate {
             }
         }
     }
+
 
     // 先矩阵转置，再左右对称的两列互换
     public void rotate1(int[][] matrix) {
@@ -51,10 +52,17 @@ public class No48_Rotate {
         }
     }
 
+
     public void rotate2(int[][] matrix) {
         int n = matrix.length;
+        // 只要分别以矩阵左上角 1/4 的各元素为起始点执行以上旋转操作，即可完整实现矩阵旋转
+        // 即，当矩阵大小 n 为偶数时，取前 n/2 行、前 n/2 列的元素为起始点
+        // 当矩阵大小 n 为奇数时，取前 n/2 行、前 (n + 1)/2 列为元素起始点
         for (int i = 0; i < n / 2; ++i) {
             for (int j = 0; j < (n + 1) / 2; ++j) {
+                /* 对于矩阵任意第 i 行、第 j 列元素 matrix[i][j] ，矩阵旋转 90º 后「元素位置旋转公式」为：
+                matrix[i][j] → matrix[j][n − 1 − i]
+                    原索引位置 → 旋转后索引位置 */
                 int temp = matrix[i][j];
                 matrix[i][j] = matrix[n - j - 1][i];
                 matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
@@ -63,6 +71,7 @@ public class No48_Rotate {
             }
         }
     }
+
 
     public static void main(String[] args) {
         No48_Rotate test = new No48_Rotate();
