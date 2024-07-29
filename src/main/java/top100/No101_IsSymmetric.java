@@ -10,9 +10,13 @@ public class No101_IsSymmetric {
 
     private boolean recur(TreeNode left, TreeNode right) {
         if (left == null && right == null) return true;
-        if (left == null || right == null || left.val != right.val) return false;
+        if (left == null && right != null) return false;
+        if (left != null && right == null) return false;
+        if (left.val != right.val) return false;
+        // if (left == null || right == null || left.val != right.val) return false;  // 上面三行可以合并成这一行
         return recur(left.left, right.right) && recur(left.right, right.left);
     }
+
 
     // 可以实现这样一个递归函数，通过「同步移动」两个指针的方法来遍历这棵树，p 指针和 q 指针一开始都指向这棵树的根，随后 p 右移时，q 左移，p 左移时，q 右移。
     // 每次检查当前 p 和 q 节点的值是否相等，如果相等再判断左右子树是否对称
@@ -26,11 +30,12 @@ public class No101_IsSymmetric {
         return p.val == q.val && check(p.left, q.right) && check(p.right, q.left);
     }
 
+
     public boolean isSymmetric3(TreeNode root) {
-        return check2(root, root);
+        return check3(root, root);
     }
 
-    public boolean check2(TreeNode u, TreeNode v) {
+    public boolean check3(TreeNode u, TreeNode v) {
         Queue<TreeNode> q = new LinkedList<TreeNode>();
         q.offer(u);
         q.offer(v);
