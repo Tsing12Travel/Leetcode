@@ -15,9 +15,12 @@ public class No25_ReverseKGroup {
         while (len >= k) {
             ListNode start = prev.next;
             ListNode end = start;
+
+            // 由于 reverse 方法不包含最后一个节点，故 end 可以向后移动 k 步，而不是 k - 1 步
             for (int i = 0; i < k; i++) {
                 end = end.next;
             }
+
             prev.next = reverse(start, end);
             prev = start;
             len -= k;
@@ -29,7 +32,7 @@ public class No25_ReverseKGroup {
     private ListNode reverse(ListNode head, ListNode tail) {
         ListNode prev = tail;
 
-        while (head != tail) {
+        while (head != tail) {  // 注意本翻转方法不包含 tail 节点，即翻转区间为 [head, tail)
             ListNode next = head.next;
             head.next = prev;
             prev = head;
