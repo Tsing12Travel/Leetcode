@@ -5,10 +5,11 @@ public class No206_ReverseList {
         if (head == null || head.next == null) return head;
 
         ListNode newHead = reverseList(head.next);
-        head.next.next = head;
-        head.next = null;
+        head.next.next = head;  // 注意理解此处，可理解为 (head.next).next = head
+        head.next = null;  // 断链，否则可能成环
         return newHead;
     }
+
 
     public ListNode reverseList2(ListNode head) {
         ListNode prev = null;
@@ -24,6 +25,7 @@ public class No206_ReverseList {
         return prev;
     }
 
+
     public ListNode reverseList3(ListNode head) {
         return recur(head, null);
     }
@@ -35,6 +37,7 @@ public class No206_ReverseList {
         curr.next = prev;  // 修改节点引用指向
         return res;  // 返回反转链表的头节点
     }
+
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
