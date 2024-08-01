@@ -39,7 +39,7 @@ public class No114_Flatten {
                 curr = curr.left;
             }
 
-            curr = stack.pop();
+            curr = stack.pop();  // 注意这里弹出的节点为当前节点
             curr = curr.right;
         }
 
@@ -75,6 +75,28 @@ public class No114_Flatten {
                 root.right = root.left;
                 root.left = null;
                 // 考虑下一个节点
+                root = root.right;
+            }
+        }
+    }
+
+
+    // 本质上和 flatten3 方法一致
+    public void flatten3_2(TreeNode root) {
+        if (root == null) return;  // 这里可以不写，当根节点为空时，可以不做任何操作
+
+        while (root != null) {
+            TreeNode node = root.left;
+            if (node != null) {
+                while (node.right != null) {
+                    node = node.right;
+                }
+
+                node.right = root.right;
+                root.right = root.left;
+                root.left = null;
+                root = root.right;
+            } else {
                 root = root.right;
             }
         }
