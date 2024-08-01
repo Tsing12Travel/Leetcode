@@ -22,6 +22,8 @@ public class No230_KthSmallest {
     }
 
 
+    // 在二叉搜索树中，任意子节点都满足“左子节点 < 根节点 < 右子节点”的规则。因此二叉搜索树具有一个重要性质：二叉搜索树的中序遍历为递增序列
+    // 本题可被转化为求中序遍历的第 k 个节点
     int ans, k;
 
     public int kthSmallest2(TreeNode root, int k) {
