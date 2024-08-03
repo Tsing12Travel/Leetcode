@@ -27,4 +27,22 @@ public class No236_LowestCommonAncestor {
         // 左右子树都找到 p 和 q 了，那就说明 p 和 q 分别在左右两个子树上，所以此时的最近公共祖先就是 root
         return root;*/
     }
+
+
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        // base case
+        if(root == null) return null;
+        if(root.val == p.val || root.val == q.val){
+            return root; // could be x or y
+        }
+        // traverse down to search
+        TreeNode leftSearchResult = lowestCommonAncestor(root.left, p, q);
+        TreeNode rightSearchResult = lowestCommonAncestor(root.right, p, q);
+
+        // only found on node on the current side
+        if(leftSearchResult == null) return rightSearchResult;
+        if(rightSearchResult == null) return leftSearchResult;
+
+        return root;
+    }
 }
