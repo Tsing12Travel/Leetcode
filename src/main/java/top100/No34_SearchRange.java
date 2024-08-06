@@ -29,6 +29,58 @@ public class No34_SearchRange {
     }
 
 
+    public static int[] searchRange2(int[] nums, int target) {
+        int firstIndex = findFirstIndex(nums, target);
+        int lastIndex = findLastIndex(nums, target);
+
+        return new int[]{firstIndex, lastIndex};
+    }
+
+    // 查找目标值的第一个位置
+    private static int findFirstIndex(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int result = -1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                result = mid;
+                right = mid - 1;  // 继续搜索左侧部分
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return result;
+    }
+
+    // 查找目标值的最后一个位置
+    private static int findLastIndex(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int result = -1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                result = mid;
+                left = mid + 1;  // 继续搜索右侧部分
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return result;
+    }
+
+
     public static void main(String[] args) {
         int[] nums = new int[]{5, 7, 7, 8, 8, 10};
         No34_SearchRange sr = new No34_SearchRange();
