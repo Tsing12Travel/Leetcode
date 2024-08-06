@@ -18,10 +18,36 @@ public class No35_SearchInsert {
         }
         return left;
     }
+
+
+    public int searchInsert2(int[] nums, int target) {
+        // 不用判断数组为空，因为题目最后给出的数据范围说数组不为空
+        int len = nums.length;
+        // 特殊判断
+        if (nums[len - 1] < target) {
+            return len;
+        }
+
+        // 程序走到这里一定有 nums[len - 1] >= target，插入位置在区间 [0, len - 1]
+        int left = 0;
+        int right = len - 1;
+        // 在区间 nums[left, right] 里查找第 1 个大于等于 target 的元素的下标
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                // 下一轮搜索的区间是 [mid + 1, right]
+                left = mid + 1;
+            } else {
+                // 下一轮搜索的区间是 [left, mid]
+                right = mid;
+            }
+        }
+        return left;
+    }
 }
 
 /*
-二分查找，最后为什么要返回left？
+二分查找，最后为什么要返回 left ？
 
 穷尽且不重复所有可能.一共有以下4种可能：
 1、目标值存在于数组中
