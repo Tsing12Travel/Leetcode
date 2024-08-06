@@ -20,8 +20,8 @@ public class UpperBound {
 
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1, 3, 3, 3, 3, 3, 5, 6, 7};
+        int[] nums = new int[]{1, 3, 3, 3, 3, 3, 5, 5, 6, 7};
         UpperBound ub = new UpperBound();
-        System.out.println(ub.upperBound(nums, 3));
+        System.out.println(ub.upperBound(nums, 8));  // 找不到 K 时，会返回比 k 小的前一个数的下标
     }
 }
