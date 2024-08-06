@@ -12,7 +12,7 @@ public class LowerBound {
             int mid = left + (right - left) / 2;
             if (nums[mid] < k) {
                 left = mid + 1;
-            } else {
+            } else {  // nums[mid] = k 时，右边界依然左移，直到越界，即 left > right，故等于 k 的数的左边界为 left
                 right = mid - 1;
             }
         }
@@ -21,8 +21,8 @@ public class LowerBound {
 
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1, 3, 3, 3, 3, 3, 5, 6, 7};
+        int[] nums = new int[]{1, 3, 3, 3, 3, 3, 5, 5, 6, 7};
         LowerBound lb = new LowerBound();
-        System.out.println(lb.lowerBound(nums, 5));
+        System.out.println(lb.lowerBound(nums, 4));  // 找不到 k 时，会返回比 k 小的前一个数的(最后一个)下标
     }
 }
