@@ -29,9 +29,9 @@ public class No207_CanFinish {
             preClassCount[prerequisite[0]]++;
         }
 
-        //存放可以直接学习的课程，第一次放置直接可学的课程，后续防止通过这些课程后可学的可成
+        // 存放可以直接学习的课程，第一次放置直接可学的课程，后续防止通过这些课程后可学的可成
         Deque<Integer> queue = new LinkedList<>();
-        //放置初始化课程
+        // 放置初始化课程
         for (int i = 0; i < numCourses; i++) {
             if (preClassCount[i] == 0) {
                 queue.add(i);
@@ -39,9 +39,9 @@ public class No207_CanFinish {
         }
 
         int learnedClass = numCourses;  // 这个变量可以没有，直接使用 numCourses
-        //开始搜寻课程
+        // 开始搜寻课程
         while (!queue.isEmpty()) {
-            //广度优先遍历
+            // 广度优先遍历
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 // 将要学习的前置课程
@@ -121,6 +121,52 @@ public class No207_CanFinish {
         return numCourses == 0;
     }
 
+
+    // 使用 DFS 检测环
+    public boolean canFinish3(int numCourses, int[][] prerequisites) {
+        // 构建课程图
+        List<List<Integer>> courseGraph = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            courseGraph.add(new ArrayList<>());
+        }
+        for (int[] prerequisite : prerequisites) {
+            courseGraph.get(prerequisite[1]).add(prerequisite[0]);
+        }
+
+        // 标记每个节点的访问状态
+        int[] visited = new int[numCourses]; // 0: 未访问, 1: 正在访问, 2: 已完成访问
+
+        // 检查每门课程
+        for (int i = 0; i < numCourses; i++) {
+            if (!dfs(i, courseGraph, visited)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean dfs(int course, List<List<Integer>> courseGraph, int[] visited) {
+        if (visited[course] == 1) { // 检测到环
+            return false;
+        }
+        if (visited[course] == 2) { // 已经完成访问，跳过
+            return true;
+        }
+
+        // 标记为正在访问
+        visited[course] = 1;
+
+        // DFS 访问当前课程的后续课程
+        for (int neighbor : courseGraph.get(course)) {
+            if (!dfs(neighbor, courseGraph, visited)) {
+                return false;
+            }
+        }
+
+        // 标记为访问完成
+        visited[course] = 2;
+        return true;
+    }
 
     public static void main(String[] args) {
         int[][] prerequisites = new int[][]{{1, 0}};
