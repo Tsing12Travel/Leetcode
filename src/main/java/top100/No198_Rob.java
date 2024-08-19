@@ -54,6 +54,7 @@ public class No198_Rob {
 
 
     public int rob4(int[] nums) {
+        // 初始状态：在循环开始之前，f0 和 f1 都初始化为 0，这意味着如果没有房子，最大偷窃金额为 0
         int res = 0, f0 = 0, f1 = 0;
 
         for (int x : nums) {
@@ -63,6 +64,30 @@ public class No198_Rob {
         }
 
         return res;
+    }
+
+
+    public int rob5(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int n = nums.length;
+        if (n == 1) {
+            return nums[0];
+        }
+
+        // 初始条件
+        int prev2 = nums[0];
+        int prev1 = Math.max(nums[0], nums[1]);
+
+        // 动态规划迭代
+        for (int i = 2; i < n; i++) {
+            int current = Math.max(prev1, nums[i] + prev2);
+            prev2 = prev1;
+            prev1 = current;
+        }
+
+        return prev1;
     }
 
 
