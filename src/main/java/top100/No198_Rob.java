@@ -47,6 +47,8 @@ public class No198_Rob {
             dp[i + 2] = Math.max(nums[i] + dp[i], dp[i + 1]);
         }
 
+        // 最后一间房子下标为 len - 1，由于 dp 数组最开始两个位置放置了 nums[0]、nums[1]
+        // (相当于 dp 数组右移了两个下标，故 到最后一间房子所获价值的下标为 len - 1 + 2 = len + 1)
         return dp[len + 1];
     }
 
