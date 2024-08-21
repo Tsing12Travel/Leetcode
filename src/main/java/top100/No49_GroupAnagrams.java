@@ -32,6 +32,7 @@ public class No49_GroupAnagrams {
         return new ArrayList<>(map.values());
     }
 
+
     public static List<List<String>> groupAnagrams2(String[] strs) {
         List<List<String>> res = new ArrayList<>();
         if (strs.length == 0) {
@@ -51,6 +52,7 @@ public class No49_GroupAnagrams {
         res.addAll(map.values());
         return res;
     }
+
 
     public static List<List<String>> groupAnagrams3(String[] strs) {
         HashMap<String, List<String>> map = new HashMap<>();
@@ -78,6 +80,7 @@ public class No49_GroupAnagrams {
 
         return new ArrayList<>(map.values());
     }
+
 
     public static void main(String[] args) {
         String[] str = new String[]{"eat","tea","tan","ate","nat","bat"};
