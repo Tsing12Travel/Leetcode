@@ -1,9 +1,6 @@
 package top100;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.*;
 
 public class No239_MaxSlidingWindow {
     /* 遍历数组时，每轮保证单调队列 deque ：
@@ -95,11 +92,50 @@ public class No239_MaxSlidingWindow {
     }
 
 
+    // 使用 PriorityQueue 实现大顶堆的滑动窗口最大值
+    public int[] maxSlidingWindow4(int[] nums, int k) {
+        int len = nums.length;
+        if (len == 0 || k == 0) return new int[0];
+
+        // 大顶堆，比较规则是按照值降序排列，如果值相同则按照下标升序排列
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] a, int[] b) {
+                return b[0] - a[0];  // 根据值降序排列
+            }
+        });
+
+        int[] res = new int[len - k + 1];
+
+        // 初始化堆，加入前 k 个元素
+        for (int i = 0; i < k; i++) {
+            maxHeap.add(new int[]{nums[i], i});
+        }
+        res[0] = maxHeap.peek()[0];  // 第一个窗口的最大值
+
+        // 开始滑动窗口
+        for (int i = k; i < len; i++) {
+            // 把新元素加入堆
+            maxHeap.add(new int[]{nums[i], i});
+
+            // 移除堆顶不在当前窗口的元素（如果它的下标小于 i - k + 1）
+            while (maxHeap.peek()[1] <= i - k) {
+                maxHeap.poll();
+            }
+
+            // 堆顶元素就是当前窗口的最大值
+            res[i - k + 1] = maxHeap.peek()[0];
+        }
+
+        return res;
+    }
+
+
     public static void main(String[] args) {
         int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
         int k = 3;
         No239_MaxSlidingWindow slidingWindow = new No239_MaxSlidingWindow();
-        int[] res = slidingWindow.maxSlidingWindow2(nums, k);
+        int[] res = slidingWindow.maxSlidingWindow4(nums, k);
         System.out.println(Arrays.toString(res));
     }
 }

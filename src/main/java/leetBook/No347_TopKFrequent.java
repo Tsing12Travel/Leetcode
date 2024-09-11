@@ -33,7 +33,8 @@ public class No347_TopKFrequent {
         for (Integer key : map.keySet()) {
             if (pq.size() < k) {
                 pq.add(key);
-            } else if (map.get(key) > map.get(pq.peek())) {
+            // } else if (pq.size() >= k && map.get(key) > map.get(pq.peek())) {
+            } else if (map.get(key) > map.get(pq.peek())) {  // 此处隐含了 pq.size() >= k
                 pq.poll();
                 pq.add(key);
             }
