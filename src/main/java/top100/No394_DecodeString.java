@@ -26,7 +26,7 @@ public class No394_DecodeString {
                 }
                 // 与括号外合并。注意这里的 pop() 弹出的是 stack_res 内的一整个数据(这个整体构成了 StringBuilder 的内容主体)
                 res = stack_res.pop().append(curr_res);
-            } else if (c >= '0' && c <= '9') {
+            } else if (c >= '0' && c <= '9') {  // 注意这里 x(字符) 与数字的比较，必须给数字添加单引号，因为字符不能直接与数字比较
                 // 如果 multi 是多位，则需要 ×10
                 multi = multi * 10 + c - '0';
             } else {
