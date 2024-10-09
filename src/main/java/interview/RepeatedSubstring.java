@@ -1,5 +1,6 @@
 package interview;
 
+// 10/08 深圳光魔科技笔试题
 public class RepeatedSubstring {
     // 字符串匹配法：通过将字符串拼接两次并去掉首尾字符，检查原字符串是否出现在新字符串中。如果是，则说明原字符串是由一个较短的子字符串重复组成的
     public static boolean isRepeatedSubstring(String s) {
