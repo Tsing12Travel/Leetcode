@@ -20,7 +20,7 @@ public class No33_Search {
                 } else {
                     right = mid - 1;
                 }
-            } else  {  // 左侧有序
+            } else {  // 左侧有序
                 if (nums[0] <= target && target < nums[mid]) {
                     right = mid - 1;
                 } else {
@@ -28,6 +28,40 @@ public class No33_Search {
                 }
             }
         }
+        return -1;
+    }
+
+
+    public int search2(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            // 如果中间值就是目标值，直接返回
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            // 判断左半部分是否有序
+            if (nums[left] <= nums[mid]) {
+                // 如果目标值在左半部分的范围内
+                if (nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1;
+                } else { // 否则，去右半部分继续查找
+                    left = mid + 1;
+                }
+            } else { // 否则右半部分有序
+                // 如果目标值在右半部分的范围内
+                if (nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1;
+                } else { // 否则，去左半部分继续查找
+                    right = mid - 1;
+                }
+            }
+        }
+
+        // 未找到目标值
         return -1;
     }
 
