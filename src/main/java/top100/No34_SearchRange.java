@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class No34_SearchRange {
     public int[] searchRange(int[] nums, int target) {
         int start = lowerBound(nums, target);
-        // nums 中没有 target
+        // 两种情况返回 [-1,-1] ==> start == nums.length 越界(左边界等于数组长度) 或 nums 中没有 target
         if (start == nums.length || nums[start] != target) return new int[]{-1, -1};
         // 如果 start 存在，那么 end 必定存在
         int end = lowerBound(nums, target + 1) - 1;
