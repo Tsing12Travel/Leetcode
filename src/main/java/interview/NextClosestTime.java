@@ -23,6 +23,7 @@ public class NextClosestTime {
                 minutes = 0;
                 hours++;
             }
+
             if (hours == 24) {
                 hours = 0;
             }
@@ -38,9 +39,11 @@ public class NextClosestTime {
                     break;
                 }
             }
+
             if (isValid) return newTime;
         }
     }
+
 
     public static void main(String[] args) {
         NextClosestTime solution = new NextClosestTime();
