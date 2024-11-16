@@ -17,9 +17,9 @@ public class No56_Merge {
         Arrays.sort(intervals, (o1, o2) -> o1[0] - o2[0]);
 
         List<int[]> merged = new ArrayList<>();
-        for (int i = 0; i < intervals.length; i++) {
-            int left = intervals[i][0];
-            int right = intervals[i][1];
+        for (int[] interval : intervals) {
+            int left = interval[0];
+            int right = interval[1];
 
             if (merged.isEmpty() || merged.getLast()[1] < left) {
                 merged.add(new int[]{left, right});
