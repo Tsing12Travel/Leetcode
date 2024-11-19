@@ -4,6 +4,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class No138_CopyRandomList {
+    // 普通链表的复制
+    public Node copyNormalList(Node head) {
+        Node cur = head;
+        Node dum = new Node(0), pre = dum;
+        while(cur != null) {
+            Node node = new Node(cur.val); // 复制节点 cur
+            pre.next = node;               // 新链表的 前驱节点 -> 当前节点
+            // pre.random = "???";         // 新链表的 「 前驱节点 -> 当前节点 」 无法确定
+            cur = cur.next;                // 遍历下一节点
+            pre = node;                    // 保存当前新节点
+        }
+        return dum.next;
+    }
+
+
+    // 哈希表
     public Node copyRandomList(Node head) {
         if (head == null) return null;
 
@@ -29,6 +45,7 @@ public class No138_CopyRandomList {
     }
 
 
+    // 拼接 + 拆分
     public Node copyRandomList2(Node head) {
         if (head == null) return null;
 
@@ -44,6 +61,7 @@ public class No138_CopyRandomList {
         curr = head;
         // 构建各新节点的 random 指向
         while (curr != null) {
+            //if (curr.random != null) 的目的是避免访问 null 引用，确保深拷贝过程中每个节点的 random 指针设置正确
             if (curr.random != null) {
                 curr.next.random = curr.random.next;
             }
