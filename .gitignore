@@ -11,6 +11,8 @@ target/
 *.iws
 *.iml
 *.ipr
+.idea/deployment.xml
+.idea/webServers.xml
 
 ### Eclipse ###
 .apt_generated
