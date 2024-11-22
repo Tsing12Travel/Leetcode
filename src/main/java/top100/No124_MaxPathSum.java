@@ -33,10 +33,10 @@ public class No124_MaxPathSum {
         }
 
         // 递归计算左右子树的最大贡献值
-        int leftGain = Math.max(maxGain(node.left), 0);  // 如果左子树贡献为负，取0（不选左子树）
-        int rightGain = Math.max(maxGain(node.right), 0); // 如果右子树贡献为负，取0（不选右子树）
+        int leftGain = Math.max(maxGain(node.left), 0);  // 如果左子树贡献为负，取 0（不选左子树）
+        int rightGain = Math.max(maxGain(node.right), 0);  // 如果右子树贡献为负，取 0（不选右子树）
 
-        // 计算当前节点的最大路径和
+        // 更新当前节点的最大路径和（可能不经过根节点）
         int currentMaxPath = node.val + leftGain + rightGain;
 
         // 更新全局最大路径和
@@ -44,5 +44,18 @@ public class No124_MaxPathSum {
 
         // 返回节点的最大贡献值
         return node.val + Math.max(leftGain, rightGain);
+    }
+
+
+    public static void main(String[] args) {
+        // 构造测试用例
+        TreeNode root = new TreeNode(-10);
+        root.left = new TreeNode(9);
+        root.right = new TreeNode(20);
+        root.right.left = new TreeNode(15);
+        root.right.right = new TreeNode(7);
+
+        No124_MaxPathSum No124 = new No124_MaxPathSum();
+        System.out.println(No124.maxPathSum2(root)); // 输出: 42
     }
 }
