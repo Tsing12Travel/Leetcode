@@ -33,9 +33,11 @@ public class PingAn {
         // 内部实现 String temp = (new StringBuilder()).append(str1).append("cd").toString();
         String str5 = str1 + "cd";
         System.out.println("str5==str4：" + (str5 == str4));  // false
+
         // 内部实现 String temp1 = (new StringBuilder()).append(str1).append(str2).toString();
         String str6 = str1 + str2;
         System.out.println("str6==str4：" + (str6 == str4));  // false
+
         str5 = str5.intern();  // 将 str5 放进常量池，并将引用赋给原来的 str5
         System.out.println("str5==str4：" + (str5 == str4));  // true
     }
