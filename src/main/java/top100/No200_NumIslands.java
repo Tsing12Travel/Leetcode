@@ -17,8 +17,13 @@ public class No200_NumIslands {
     }
 
     public void dfs(char[][] grid, int i, int j) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[i].length || grid[i][j] == '0') return;
-        grid[i][j] = '0';
+        // 边界条件：超出网格范围或遇到水/已访问
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[i].length || grid[i][j] != '1') return;
+
+        // 将当前位置标记为已访问
+        grid[i][j] = '2';
+
+        // 递归访问上下左右
         dfs(grid, i - 1, j);
         dfs(grid, i + 1, j);
         dfs(grid, i, j - 1);
@@ -61,5 +66,13 @@ public class No200_NumIslands {
     // 判断坐标 (r, c) 是否在网格中
     private boolean inArea(char[][] grid, int r, int c) {
         return 0 <= r && r < grid.length && 0 <= c && c < grid[0].length;
+    }
+
+
+    public static void main(String[] args) {
+        // char[][] grid = {{'1', '1', '1', '1', '0'}, {'1', '1', '0', '1', '0'}, {'1', '1', '0', '0', '0'}, {'0', '0', '0', '0', '0'}};
+        char[][] grid = {{'1', '1', '0', '0', '0'}, {'1', '1', '0', '0', '0'}, {'0', '0', '1', '0', '0'}, {'0', '0', '0', '1', '1'}};
+        No200_NumIslands No200 = new No200_NumIslands();
+        System.out.println(No200.numIslands(grid));
     }
 }
