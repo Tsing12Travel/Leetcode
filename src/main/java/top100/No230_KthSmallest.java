@@ -40,4 +40,47 @@ public class No230_KthSmallest {
         if (--k == 0) ans = root.val;
         dfs(root.right);
     }
+
+
+    private int count = 0;  // 用于记录当前遍历到第几个元素
+    private int result = 0;  // 保存结果
+
+    public int kthSmallest3(TreeNode root, int k) {
+        inOrderTraversal(root, k);
+        return result;
+    }
+
+    // 中序遍历辅助方法
+    private void inOrderTraversal(TreeNode node, int k) {
+        if (node == null) {
+            return;
+        }
+
+        // 遍历左子树
+        inOrderTraversal(node.left, k);
+
+        // 访问当前节点
+        count++;
+        if (count == k) {
+            result = node.val;
+            return;  // 找到第 k 小的元素后提前结束
+        }
+
+        // 遍历右子树
+        inOrderTraversal(node.right, k);
+    }
+
+
+    // 测试
+    public static void main(String[] args) {
+        // 示例树结构
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(1);
+        root.right = new TreeNode(4);
+        root.left.right = new TreeNode(2);
+
+        No230_KthSmallest No230 = new No230_KthSmallest();
+        int k = 2;  // 查找第 2 小的元素
+        System.out.println("第 " + k + " 小的元素是: " + No230.kthSmallest(root, k));
+    }
 }
