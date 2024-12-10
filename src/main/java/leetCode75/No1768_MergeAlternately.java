@@ -5,7 +5,7 @@ package leetCode75;
 给你两个字符串 word1 和 word2 。请你从 word1 开始，通过交替添加字母来合并字符串。如果一个字符串比另一个字符串长，就将多出来的字母追加到合并后字符串的末尾。
 返回合并后的字符串 。
 */
-public class No1768_mergeAlternately {
+public class No1768_MergeAlternately {
     public String mergeAlternately(String word1, String word2) {
         int len1 = word1.length();
         int len2 = word2.length();
@@ -50,7 +50,7 @@ public class No1768_mergeAlternately {
 
 
     public static void main(String[] args) {
-        No1768_mergeAlternately No1768 = new No1768_mergeAlternately();
+        No1768_MergeAlternately No1768 = new No1768_MergeAlternately();
 
         // 测试用例
         String word1 = "abc";
