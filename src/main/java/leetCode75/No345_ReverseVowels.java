@@ -53,6 +53,33 @@ public class No345_ReverseVowels {
     }
 
 
+    public String reverseVowels3(String s) {
+        // 初始化元音字符集合，标记元音字母在 hash 数组中的值为 true
+        boolean[] hash = new boolean[128];
+        String vowels = "aeiouAEIOU";
+        for (char c : vowels.toCharArray()) hash[c] = true;
+
+        char[] charArray = s.toCharArray();
+        int left = 0, right = s.length() - 1;
+
+        while (left <= right) {
+            if (!hash[charArray[left]]) {
+                left++;
+            } else if (!hash[charArray[right]]) {
+                right--;
+            } else {
+                char tp = charArray[left];
+                charArray[left] = charArray[right];
+                charArray[right] = tp;
+                left++;
+                right--;
+            }
+        }
+
+        return new String(charArray);
+    }
+
+
     public static void main(String[] args) {
         String s = "IceCreAm";
         No345_ReverseVowels No345 = new No345_ReverseVowels();
