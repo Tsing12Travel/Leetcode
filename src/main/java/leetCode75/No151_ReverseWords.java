@@ -95,6 +95,41 @@ public class No151_ReverseWords {
     }
 
 
+    public static String reverseWords4(String s) {
+        // 去除首尾空格
+        int start = 0, end = s.length() - 1;
+        while (start <= end && s.charAt(start) == ' ') start++;
+        while (end >= start && s.charAt(end) == ' ') end--;
+
+        // 手动提取单词
+        StringBuilder word = new StringBuilder();
+        StringBuilder result = new StringBuilder();
+        for (int i = start; i <= end; i++) {
+            char c = s.charAt(i);
+            if (c != ' ') {
+                word.append(c);
+            } else if (!word.isEmpty()) {
+                // 遇到空格且当前有构建的单词时，将单词插入结果的最前面
+                if (!result.isEmpty()) {
+                    result.insert(0, ' ');
+                }
+                result.insert(0, word);
+                word.setLength(0);  // 清空当前单词
+            }
+        }
+
+        // 添加最后一个单词
+        if (!word.isEmpty()) {
+            if (!result.isEmpty()) {
+                result.insert(0, ' ');
+            }
+            result.insert(0, word);
+        }
+
+        return result.toString();
+    }
+
+
     public static void main(String[] args) {
         No151_ReverseWords no151 = new No151_ReverseWords();
         String s = "Let's Go";
