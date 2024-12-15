@@ -40,7 +40,7 @@ public class No49_GroupAnagrams {
         }
 
         Map<String, List<String>> map = new HashMap<>();
-        for (String str: strs) {
+        for (String str : strs) {
             char[] chars = str.toCharArray();
             Arrays.sort(chars);
             String key = String.valueOf(chars);
@@ -82,9 +82,29 @@ public class No49_GroupAnagrams {
     }
 
 
+    public List<List<String>> groupAnagrams4(String[] strs) {
+        // 哈希表，key 为排序后的字符串，value 为异位词列表
+        Map<String, List<String>> map = new HashMap<>();
+
+        for (String str : strs) {
+            // 对字符串排序
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+
+            // 将异位词加入对应的组
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(str);
+        }
+
+        // 返回哈希表中所有值
+        return new ArrayList<>(map.values());
+    }
+
+
     public static void main(String[] args) {
-        String[] str = new String[]{"eat","tea","tan","ate","nat","bat"};
-        List<List<String>> res = groupAnagrams(str);
+        String[] str = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
+        No49_GroupAnagrams No49 = new No49_GroupAnagrams();
+        List<List<String>> res = No49.groupAnagrams4(str);
         System.out.println(res);
     }
 }
