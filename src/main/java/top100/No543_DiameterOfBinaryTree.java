@@ -63,10 +63,11 @@ public class No543_DiameterOfBinaryTree {
     private int depth4(TreeNode root) {
         if (root == null) return 0;
 
+        // 左右子树的最大深度
         int left = depth4(root.left);
         int right = depth4(root.right);
 
-        // 更新最大直径：节点之间的路径长度 = 左子树深度 + 右子树深度
+        // 更新最大直径：经过当前节点的路径长度 = 左子树深度 + 右子树深度
         diameter4 = Math.max(diameter4, left + right);
         // 返回节点为根的子树的最大深度
         return Math.max(left, right) + 1;
