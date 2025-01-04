@@ -18,6 +18,10 @@ public class No128_LongestConsecutive {
 
         int longestStreak = 1;
 
+        /* 注意此处遍历的是 num_set 而不是 nums。
+        虽然遍历 nums 时看似没有本质区别，但在实际运行中，for (int num : nums) 可能会重复检查同一个数的序列起点，特别是对于包含重复元素的输入数组时。
+        for (int i = 0; i < len; i++) 遍历时通过 i 访问 nums，处理每个数字一次，并且只检查 nums[i] - 1 是否在集合中，以确保只从可能的序列起点开始计算连续长度。
+        遍历时使用 for (int x : nums)，由于 nums 中的重复数字仍然会被多次检查，即使在 set 中，它们仍然导致冗余判断，进而增加不必要的计算。*/
         for (int num : num_set) {
             // 检查 set 中是否存在比当前 num 小 1 的数
             if (!num_set.contains(num - 1)) {
@@ -36,6 +40,7 @@ public class No128_LongestConsecutive {
 
         return longestStreak;
     }
+
 
     public static int longestConsecutive2(int[] nums) {
         if (nums.length == 0) {
@@ -58,6 +63,7 @@ public class No128_LongestConsecutive {
 
         return res;
     }
+
 
     public static void main(String[] args) {
         int[] nums = new int[]{100, 4, 200, 1, 3, 2};
