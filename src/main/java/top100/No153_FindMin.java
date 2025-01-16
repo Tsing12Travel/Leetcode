@@ -37,7 +37,7 @@ public class No153_FindMin {
             }
         }
 
-        // 最终left和right会收敛到最小值的位置
+        // 最终 left 和 right 会收敛到最小值的位置
         return nums[left];
     }
 
