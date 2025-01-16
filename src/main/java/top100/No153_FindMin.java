@@ -32,7 +32,7 @@ public class No153_FindMin {
             if (nums[mid] > nums[right]) {
                 left = mid + 1;
             } else {
-                // 否则，最小值在左半部分或mid就是最小值
+                // 否则，最小值在左半部分或 mid 就是最小值
                 right = mid;
             }
         }
