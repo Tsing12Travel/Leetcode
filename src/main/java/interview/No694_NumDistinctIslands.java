@@ -9,6 +9,16 @@ import java.util.Set;
  * 请你计算这个网络中共有多少个形状不同的岛屿。两个岛屿被认为是相同的，当且仅当一个岛屿可以通过平移变换（不可以旋转、翻转）和另一个岛屿重合
  * */
 public class No694_NumDistinctIslands {
+    /*
+    * 这个问题的核心是计算 形状不同的岛屿数量，其中 两个岛屿只有在完全相同（不允许旋转或翻转）的情况下才视为相同。
+    *
+    *解题思路
+        遍历整个网格，找到所有 1 位置。
+        深度优先搜索（DFS） 记录岛屿的形状：
+        以 (0,0) 作为基准，使用 相对坐标 记录岛屿形状。
+        这样即使岛屿出现在不同位置，只要形状相同，就会被认为是同一个岛屿。
+        使用 Set 记录不同的形状，最终 Set.size() 即为不同形状的数量。
+    * */
     public int numDistinctIslands(int[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
         int m = grid.length, n = grid[0].length;
