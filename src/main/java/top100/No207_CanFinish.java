@@ -29,7 +29,7 @@ public class No207_CanFinish {
             preClassCount[prerequisite[0]]++;
         }
 
-        // 存放可以直接学习的课程，第一次放置直接可学的课程，后续防止通过这些课程后可学的可成
+        // 存放可以直接学习的课程，第一次放置直接可学的课程，后续防止通过这些课程后可学的课程
         Deque<Integer> queue = new LinkedList<>();
         // 放置初始化课程
         for (int i = 0; i < numCourses; i++) {
@@ -50,7 +50,7 @@ public class No207_CanFinish {
                 learnedClass--;
                 // 学完后可以学的课程
                 List<Integer> list = map.get(preClazz);
-                // 遍历这些可以学习的可成
+                // 遍历这些可以学习的课程
                 if (list == null) {
                     continue;
                 }
