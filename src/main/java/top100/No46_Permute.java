@@ -38,12 +38,12 @@ public class No46_Permute {
 
         boolean[] used = new boolean[len];
         List<Integer> path = new ArrayList<>();
-        dfs(nums, 0, used, path, res);
+        dfs(0, nums, used, path, res);
 
         return res;
     }
 
-    private void dfs(int[] nums, int depth, boolean[] used, List<Integer> path, List<List<Integer>> res) {
+    private void dfs(int depth, int[] nums, boolean[] used, List<Integer> path, List<List<Integer>> res) {
         if (depth == nums.length) {
             res.add(new ArrayList<>(path));
             return;
@@ -51,9 +51,10 @@ public class No46_Permute {
 
         for (int i = 0; i < nums.length; i++) {
             if (used[i]) continue;
-            used[i] = true;
+
             path.add(nums[i]);
-            dfs(nums, depth + 1, used, path, res);
+            used[i] = true;
+            dfs(depth + 1, nums, used, path, res);
             used[i] = false;
             path.removeLast();
         }
