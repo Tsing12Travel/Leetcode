@@ -24,13 +24,14 @@ public class No113_PathSum {
         path.add(node.val);
         if (node.left == node.right) {  // 叶节点
             if (sum == targetSum) {
-                res.add(new ArrayList<>(path));
+                res.add(new ArrayList<>(path));  // 这里要 new 一个新的保存 path 的对象！！！!
+                // return;  回溯的话这里就不能 return 了，return 会导致 remove 不了
             }
         } else {
             dfs(sum, node.left);
             dfs(sum, node.right);
         }
-        path.removeLast();
+        path.removeLast();  // 恢复现场
     }
 
 
