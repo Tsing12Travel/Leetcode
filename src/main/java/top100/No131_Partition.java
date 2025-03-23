@@ -63,7 +63,7 @@ public class No131_Partition {
         for (int i = curr; i < s.length(); i++) {  // 枚举子串的结束位置
             if (isPalindrome(curr, i)) {
                 path.add(s.substring(curr, i + 1));
-                backtrack(curr + 1);
+                backtrack(i + 1);
                 path.removeLast();
             }
         }
