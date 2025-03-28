@@ -30,4 +30,13 @@ public class No56_Merge {
 
         return merged.toArray(new int[merged.size()][]);
     }
+
+
+    public static void main(String[] args) {
+        No56_Merge No56 = new No56_Merge();
+        int[][] intervals = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+        int[][] intervals2 = {{1, 4}, {4, 5}};
+        System.out.println(Arrays.deepToString(No56.merge(intervals)));
+        System.out.println(Arrays.deepToString(No56.merge(intervals2)));
+    }
 }
