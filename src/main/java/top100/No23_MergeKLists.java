@@ -71,4 +71,25 @@ public class No23_MergeKLists {
         int mid = (right + left) >> 1;
         return mergeTwoLists(merge(lists, left, mid), merge(lists, mid + 1, right));
     }
+
+
+    public static void main(String[] args) {
+        No23_MergeKLists No23 = new No23_MergeKLists();
+
+        ListNode l1 = new ListNode(1);
+        l1.next = new ListNode(4);
+        l1.next.next = new ListNode(5);
+        ListNode l2 = new ListNode(1);
+        l2.next = new ListNode(3);
+        l2.next.next = new ListNode(6);
+        ListNode l3 = new ListNode(2);
+        l3.next = new ListNode(4);
+
+        ListNode[] lists = new ListNode[]{l1, l2, l3};
+        ListNode res = No23.mergeKLists(lists);
+        while (res != null) {
+            System.out.print(res.val + " ");
+            res = res.next;
+        }
+    }
 }
