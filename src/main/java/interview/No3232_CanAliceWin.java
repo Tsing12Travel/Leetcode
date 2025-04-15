@@ -1,5 +1,6 @@
 package interview;
 
+// 2025.04.15 上海肯斯爪特科技有限公司
 public class No3232_CanAliceWin {
     public boolean canAliceWin(int[] nums) {
         int s1 = 0, s2 = 0;
