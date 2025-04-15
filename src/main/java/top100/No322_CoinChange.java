@@ -99,17 +99,20 @@ public class No322_CoinChange {
 
 
     public int coinChange5(int[] coins, int amount) {
-        int n = coins.length;
         int[] dp = new int[amount + 1];
+
         for (int i = 1; i <= amount; i++) {
             int min = amount + 1;
-            for (int c : coins) { // 遍历硬币的可选额
-                if (i - c >= 0) {
-                    min = Math.min(min, dp[i - c]);
+
+            for (int x : coins) {  // 遍历硬币的可选额
+                if (i - x >= 0) {
+                    min = Math.min(min, dp[i - x]);
                 }
             }
+
             dp[i] = min + 1;
         }
+
         return dp[amount] > amount ? -1 : dp[amount];
     }
 
